@@ -1124,13 +1124,17 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   $ccexp_year = $_POST['ccexp_year'];// => 14
   $ccexp = $_POST['ccexp'];// => 
   $cvc = $_POST['cvc'];// => 123
+  $Initials = $_POST['Initials']; // => J
 
+  print "<!-- " . print_r($_POST,1) ." -->";
   include './template.php';
 
   $xml_post_string = str_replace(Array("  ","   ","    ","     ","      ","       ","        ","\t","\n")," ",$template['lateroom_booking']); // remove whitespace from XML
   $xml_post_string = str_replace(Array("  ","   ","    ")," ",$xml_post_string ); // remove remaning whitespace from XML
 
+  print "<!-- " . print_r($xml_post_string,1) ." -->";
   $url = $laterooms_booking_url ;
+  print "<!-- " . print_r($url,1) ." -->";
   
   $xml_headers = array(
     "Content-type: text/xml;charset=\"utf-8\"",
@@ -1195,7 +1199,7 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   // unset($_POST['ccexp']);
 // unset($_POST['cvc']);
 
-
+}
 if ($array['XHI_HotelResRS']['@attributes']['success'] == "true") {
 
   $subject = 'New Booking at the ' . $_POST['hotel'];

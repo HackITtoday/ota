@@ -75,7 +75,7 @@ if (isset($_POST['quantity']) &&  isset($_POST['HotelID']) && isset($_POST['Avai
  <input data-theme="f"  id="guest_title" type="text" name="guest_title" value="<?php @print $_POST['guest_title']; ?>" placeholder="Mr" required />
 </td ></tr >
 <tr ><td > 
-  <label for="Initials" >Title</label>
+  <label for="Initials" >Initials</label>
   </td ><td >
  <input data-theme="f"  id="Initials" type="text" name="Initials" value="<?php @print $_POST['Initials']; ?>" placeholder="J" required />
 </td ></tr >
