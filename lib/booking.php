@@ -92,9 +92,20 @@ if (isset($_POST['quantity']) &&  isset($_POST['HotelID']) && isset($_POST['Avai
 </td ></tr >
 <tr ><td > 
   <label for="phone" >Phone</label>
-  </td ><td >
+  </td ><td  >
   <input data-theme="f" id="phone" type="text" name="phone" value="<?php @print $_POST['phone']; ?>" placeholder="07123456789" required parsley-type="phone" />
 </td ></tr >
+<?php if ($_POST['ota'] == 1) { ?> 
+<tr ><td > 
+  <label for="address1" >Address</label>
+  </td ><td >
+  <input data-theme="f" id="address" type="text" name="address1" value="<?php @print $_POST['address1']; ?>" placeholder="4 High Street" required />
+</td ></tr >
+<tr ><td > 
+  </td ><td >
+  <input data-theme="f" id="address2" type="text" name="address2" value="<?php @print $_POST['address2']; ?>" />
+</td ></tr >
+<?php } ?>
 <tr ><td > 
   <label for="cityName" >City</label>
   </td ><td >

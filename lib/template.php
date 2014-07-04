@@ -119,81 +119,79 @@ xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
 $template['lateroom_url'] = "http://xmlfeed.laterooms.com/index.aspx?aid=".$laterooms_id."&rtype=3&lang=en&hids=". $hotelId . "&sdate=" . $dateFrom . "&nights=" . $nights ."&canxtxt=true";
 
-$template['lateroom_booking'] = '<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <makeBooking xmlns="http://www.laterooms.com/services">
-      <b>
-        <Guest>
-        <Title>' . $guest_title . '</Title>
-        <Initials>' . $Initials . '</Initials>
-          <Surname>' . $surname . '</Surname>
-          <Email>' . $email . '</Email>
-          <Postcode>' . $zipCode . '</Postcode>
-          <Tel>' . $phone . '</Tel>
-          <SendEmailConfirmation>false</SendEmailConfirmation>
-          <Address1>' . $string . '</Address1>
-          <Address2>' . $string . '</Address2>
-          <Town>' . $cityName . '</Town>
-        </Guest>
-        <Booker>
-          <Title>' . $guest_title . '</Title>
-          <Initials>' . $Initials . '</Initials>
-          <Surname>' . $surname . '</Surname>
-          <Email>' . $email . '</Email>
-          <Postcode>' . $zipCode . '</Postcode>
-          <Tel>' . $phone . '</Tel>
-          <SendEmailConfirmation>false</SendEmailConfirmation>
-          <CountryOfResidence>'."1".'</CountryOfResidence>
-          <Address1>' . $string . '</Address1>
-          <Address2>' . $string . '</Address2>
-          <Town>' . $cityName . '</Town>
-        </Booker>
-        <PaymentCard>
-          <CardHolderName>' . $guest_title . " " . $Initials . " " . $surname . '</CardHolderName>
-          <CardType>' . $ccType . '</CardType>
-          <CardNumber>' . $ccNumber . '</CardNumber>
-          <ExpiryDate>' . $ccExpMonth . $cc  . '</ExpiryDate>
-          <IssueNumberOrStartDate>' . $string . '</IssueNumberOrStartDate>
-          <SecurityCode>' . $string . '</SecurityCode>
-        </PaymentCard>
-        <ReservationType>' . $string . '</ReservationType>
-        <FromHotel>' . $string . '</FromHotel>
-        <Language>' . $string . '</Language>
-        <EnquiryRef>' . $string . '</EnquiryRef>
-        <Unbranded>TRUE</Unbranded>
-        <SendHotelNotification>TRUE</SendHotelNotification>
-        <AutoReferralBooking>boolean</AutoReferralBooking>
-        <OptInPartner>' . $string . '</OptInPartner>
-        <JobRefNo>' . $string . '</JobRefNo>
-        <CostCentreNo>' . $string . '</CostCentreNo>
-        <TravelReason>' . $string . '</TravelReason>
-        <ArrivalTime>' . $string . '</ArrivalTime>
-        <Rooms>
-          <room>
-          <Id>' . $roomID . '</Id>
-            <GuestTitle>' . $guest_title . '</GuestTitle>
-            <GuestInitials>' . $Initials . '</GuestInitials>
-            <GuestSurname>' . $surname . '</GuestSurname>
-            <Adults>' . $string . '</Adults>
-            <Children>0</Children>
-            <BedType>' . $string . '</BedType>
-            <Cost>' . $string . '</Cost>
-            <AddBreakfast>' . $string . '</AddBreakfast>
-            <BreakfastId>' . $string . '</BreakfastId>
-          </room>
-        </Rooms>
-        <Partner>
-          <Id>' . $laterooms_id . '</Id>
-          <Username>' . $laterooms_Username . '</Username>
-          <Password>' . $laterooms_Password . '</Password>
-        </Partner>
-        <HotelId>' . $HotelID . '</HotelId>
-        <ArrivalDate>' . $date_in . '</ArrivalDate>
-        <Nights>' . $string . '</Nights>
-        <Currency>GBP</Currency>
-        <FromWhiteLabel>true</FromWhiteLabel>
-      </b>
-    </makeBooking>
+$template['lateroom_booking'] = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ser="http://www.laterooms.com/services">
+   <soap:Header/>
+   <soap:Body>
+      <ser:makeBooking>
+      <ser:b>
+        <ser:Partner>
+          <ser:Id>' . $laterooms_id . '</ser:Id>
+          <ser:Username>' . $laterooms_Username . '</ser:Username>
+          <ser:Password>' . $laterooms_Password . '</ser:Password>
+          <ser:Value/>
+        </ser:Partner>
+        <ser:Rooms>
+          <ser:room>
+            <ser:Id>' . $roomID . '</ser:Id>
+            <ser:GuestTitle>' . $guest_title . '</ser:GuestTitle>
+            <ser:GuestInitials>' . $Initials . '</ser:GuestInitials>
+            <ser:GuestSurname>' . $surname . '</ser:GuestSurname>
+            <ser:Adults>' . $total_people . '</ser:Adults>
+            <ser:Children>0</ser:Children>
+            <ser:BedType>' . $BedType . '</ser:BedType>
+            <ser:Cost>' . $totalPrice . '</ser:Cost>
+            <ser:AddBreakfast>' . $AddBreakfast . '</ser:AddBreakfast>
+            <ser:BreakfastId>' . $BreakfastId . '</ser:BreakfastId>
+          </ser:room>
+        </ser:Rooms>
+        <ser:HotelId>' . $HotelID . '</ser:HotelId>
+        <ser:ArrivalDate>' . date('d/m/Y',strtotime($date_in)) . '</ser:ArrivalDate>
+        <ser:Nights>' . $night . '</ser:Nights>
+        <ser:Currency>GBP</ser:Currency>
+        <ser:Guest>
+          <ser:Title>' . $guest_title . '</ser:Title>
+          <ser:Initials>' . $Initials . '</ser:Initials>
+          <ser:Surname>' . $surname . '</ser:ser:Surname>
+          <ser:Email>' . $email . '</ser:Email>
+          <ser:Postcode>' . $zipCode . '</ser:Postcode>
+          <ser:Tel>' . $phone . '</ser:Tel>
+          <ser:SendEmailConfirmation>false</ser:SendEmailConfirmation>
+          <ser:Address1>' . $Address1 . '</ser:Address1>
+          <ser:Address2>' . $Address2 . '</ser:Address2>
+          <ser:Town>' . $cityName . '</ser:Town>
+        </ser:Guest>
+        <ser:Booker>
+          <ser:Title>' . $guest_title . '</ser:Title>
+          <ser:Initials>' . $Initials . '</ser:Initials>
+          <ser:Surname>' . $surname . '</ser:Surname>
+          <ser:Email>' . $email . '</ser:Email>
+          <ser:Postcode>' . $zipCode . '</ser:Postcode>
+          <ser:Tel>' . $phone . '</ser:Tel>
+          <ser:SendEmailConfirmation>false</ser:SendEmailConfirmation>
+          <ser:CountryOfResidence>'.$CountryOfResidence.'</ser:CountryOfResidence>
+          <ser:Address1>' . $Address1 . '</ser:Address1>
+          <ser:Address2>' . $Address2 . '</ser:Address2>
+          <ser:Town>' . $cityName . '</ser:Town>
+        </ser:Booker>
+        <ser:PaymentCard>
+          <ser:CardHolderName>' . $guest_title . " " . $Initials . " " . $surname . '</ser:CardHolderName>
+          <ser:CardType>' . $ccType . '</ser:CardType>
+          <ser:CardNumber>' . $ccNumber . '</ser:CardNumber>
+          <ser:ExpiryDate>' . $ccExpMonth . $ccexp_year  . '</ser:ExpiryDate>
+          <ser:IssueNumberOrStartDate>' . '</ser:IssueNumberOrStartDate>
+          <ser:SecurityCode>' . $cvc . '</ser:SecurityCode>
+        </ser:PaymentCard>
+        <ser:ReservationType></ser:ReservationType>
+        <ser:FromHotel>false</ser:FromHotel>
+        <ser:Language></ser:Language>
+        <ser:Unbranded>TRUE</ser:Unbranded>
+        <ser:SendHotelNotification>TRUE</ser:SendHotelNotification>
+        <ser:DoNotBook>false</ser:DoNotBook>
+        <ser:AutoReferralBooking>false</ser:AutoReferralBooking>
+        <ser:ArrivalTime></ser:ArrivalTime>
+        <ser:SpecialRequests></ser:SpecialRequests>
+        <ser:FromWhiteLabel>true</ser:FromWhiteLabel>
+      </ser:b>
+    </ser:makeBooking>
   </soap:Body>
 </soap:Envelope>';

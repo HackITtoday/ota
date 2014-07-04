@@ -1092,6 +1092,9 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     }
   }
 } else {
+  // 
+  // LateRooms :
+  //
   $HotelID = $_POST['HotelID'];// => 575
   $roomID = $_POST ['roomID'];// => 238446
   $totalPrice = $_POST ['totalPrice'];// => £195.00
@@ -1109,20 +1112,22 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   $total_people = $_POST ['total_people'];// => 
   $tour = $_POST ['tour'];// => 
   $channel = $_POST ['channel'];// => 
-  $firstname = $_POST ['firstname'];// => marcus
+  $guest_title = $_POST ['guest_title'];// => Mr
   $surname = $_POST ['surname'];// => hitchins
   $email = $_POST ['email'];// => marcus@hhost.me
   $phone = $_POST['phone'];// => 07541386427
   $cityName = $_POST['cityName'];// => pz
+  $address1 = $_POST['address1'];// => pz
+  $address2 = $_POST['address2'];// => pz
   $zipCode = $_POST['zipCode'];// => pz
   $countryName = $_POST['countryName'];// => GB
   $ccHolderFirstName = $_POST['ccHolderFirstName'];// => MARCUS
   $ccHolderLastName = $_POST['ccHolderLastName'];// => HITCHINS
-  $ccnumber = $_POST['ccnumber'];// => 4111111111111111
-  $cctype = $_POST['cctype'];// => 
-  $ccexp_month = $_POST['ccexp_month'];// => 01
-  $ccexp_year = $_POST['ccexp_year'];// => 14
-  $ccexp = $_POST['ccexp'];// => 
+  $ccNumber = $_POST['ccnumber'];// => 4111111111111111
+  $ccType = $_POST['cctype'];// => 
+  $ccExp_month = $_POST['ccexp_month'];// => 01
+  $ccExp_year = $_POST['ccexp_year'];// => 14
+  $ccExp = $_POST['ccexp'];// => 
   $cvc = $_POST['cvc'];// => 123
   $Initials = $_POST['Initials']; // => J
 

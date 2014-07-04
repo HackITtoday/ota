@@ -22,7 +22,7 @@ $UserOrgID = "essentialhotels";
 $UserID = $soapUser;
 $UserPSW = $soapPassword;
 
-$laterooms_booking_url = "http://xmlbookingwrapper.sandbox.laterooms.com";
+$laterooms_booking_url = "https://xmlbookingwrapperuat.laterooms.com/XmlBooking.asmx";
 $laterooms_id = "3095";
 $laterooms_Username = "nick@e-travelguide.info";
 $laterooms_Password = "marjorie";

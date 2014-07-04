@@ -447,7 +447,7 @@ if ($ota == "1") { // verene
 
   }
   foreach ($mapped as $Type => $map ) {
-    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display);
+    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $dateTo, $people);
   }
   $facilities = $array['hotel']['facilities']['facility'];
 
@@ -460,7 +460,7 @@ if ($ota == "1") { // verene
   // print_r($array['hotel']);
 }
 
-function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display) {
+function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $dateTo, $people) {
   if ($Type) {
     print "<div class='topbox'>";
     print   "<img class='room phone-only' src=" . $map['images'] . " />";
@@ -470,7 +470,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
       print   "<h3>" . $map['display_title'] . "</h3>";
     }
     foreach ($rooms_array as $room) {
-      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display); 
+      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $dateTo, $people ); 
     }
     if ( count($rooms_array) == 0 ) {
       print '<div id="norooms" style="font-family:Roboto, sans-serif; font-size:20px; color:#ff3300; font-weight:300;"> This room have not been advertised on-line you will need to phone us: <a href="tel:01189714700" >0118 971 4700</a></div>';
@@ -478,7 +478,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
     print "</div><div style='clear:both' ></div>"; 
   }
 }
-function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display) {
+function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $dateTo, $people) {
   $Price = $room['Price'];
   $Cancellation_policy = $room['Cancellation_policy'] ;
   $ValueAddDisplay = $room['ValueAddDisplay'];
@@ -512,7 +512,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<input type="hidden" name="date-in" value="'. $dateFrom .'" />';
     print '<input type="hidden" name="status" value="'. $title .' in the '.  $display_r  .' for a Total Amount of '. $Price .' for '. strip_tags($people_display) .'" />';
     print '<input type="hidden" name="Clause" value="'. $room['Formatted_cancellation_policy'] . '" />';
-    print '<input type="hidden" name="date-out" value="'.'" />';
+    print '<input type="hidden" name="date-out" value="'.$dateTo.'" />';
     print '<input type="hidden" name="sellingMethod" value="'.'" />';
     print '<input type="hidden" name="prepaid" value="'.'" />';
     print '<input type="hidden" name="hotel" value="'.'" />';
