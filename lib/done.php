@@ -1117,10 +1117,10 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   $email = $_POST ['email'];// => marcus@hhost.me
   $phone = $_POST['phone'];// => 07541386427
   $cityName = $_POST['cityName'];// => pz
-  $address1 = $_POST['address1'];// => pz
-  $address2 = $_POST['address2'];// => pz
+  $address1 = $_POST['address1'];// => 
+  $address2 = $_POST['address2'];// => 
   $zipCode = $_POST['zipCode'];// => pz
-  $countryName = $_POST['countryName'];// => GB
+  $countryName = $_POST['countryName'];// =>1 
   $ccHolderFirstName = $_POST['ccHolderFirstName'];// => MARCUS
   $ccHolderLastName = $_POST['ccHolderLastName'];// => HITCHINS
   $ccNumber = $_POST['ccnumber'];// => 4111111111111111
@@ -1130,43 +1130,44 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   $ccExp = $_POST['ccexp'];// => 
   $cvc = $_POST['cvc'];// => 123
   $Initials = $_POST['Initials']; // => J
+  $nights = (int) $_POST['nights']; // => 1
 
-  print "<!-- " . print_r($_POST,1) ." -->";
+  print "<!-- Post :" . print_r($_POST,1) ." -->";
+  print "<!-- nights " . print_r($nights,1) ." -->";
   include './template.php';
 
   $xml_post_string = str_replace(Array("  ","   ","    ","     ","      ","       ","        ","\t","\n")," ",$template['lateroom_booking']); // remove whitespace from XML
   $xml_post_string = str_replace(Array("  ","   ","    ")," ",$xml_post_string ); // remove remaning whitespace from XML
+  $xml_post_string = utf8_encode ( $xml_post_string);  // to make sure it is utf8 encoded
 
-  print "<!-- " . print_r($xml_post_string,1) ." -->";
-  $url = $laterooms_booking_url ;
-  print "<!-- " . print_r($url,1) ." -->";
+  print "<!-- " . print_r($xml_post_string,1) ." -->";  //  this is printed for debugging purposes
+  $url = $laterooms_booking_url ;  //  get the url from the  authorisation document
+  print "<!-- " . print_r($url,1) ." -->"; // //  this is printed for debugging purposes
   
-  $xml_headers = array(
-    "Content-type: text/xml;charset=\"utf-8\"",
-    "Accept: text/xml",
-    "Cache-Control: no-cache",
-    "Pragma: no-cache",
-    "SOAPAction: ". $url,
-    "Content-length: ".strlen($xml_post_string),
-  ); 
 
+  $xml_headers = array(
+    "content-type: application/soap+xml; charset=utf-8",
+    "Accept: text/xml",
+    "Content-length: ".strlen($xml_post_string),
+    "request-type: makeBooking",
+  );
+  
   // PHP cURL  for https connection with auth
   $ch = curl_init();
-  // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+//  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
   curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  //curl_setopt($ch, CURLOPT_USERPWD, $soapUser.":".$soapPassword); // username and password - declared in auth.php
-  //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-  //curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-  //curl_setopt($ch, CURLOPT_POST, true);
+//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//  curl_setopt($ch, CURLOPT_USERPWD, $laterooms_Username.":".$laterooms_Password); // username and password - declared in auth.php
+//  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+//  curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+  curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string); // the SOAP request
-  //curl_setopt($ch, CURLOPT_HTTPHEADER, $xml_headers);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $xml_headers);
   curl_setopt($ch, CURLOPT_HEADER,true); 
 
   // converting
   $response = curl_exec($ch); 
 
-  print "<!-- " . print_r($response,1) ." -->";
   curl_close($ch);
 
   // converting
@@ -1183,13 +1184,21 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   print "<!-- " . print_r($xml,1) ." -->";
 
 ?></center>
-<!-- 
+
 <?php 
   if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 ) ) {
     // debug
+  print print_r($response,1);
     print_r($array);
     print_r($_POST);
     print ($message);
+    print '<form method="post" data-ajax="false" action="done.php" >'; //  I've added this form, so that i can test the booking process without having to go through the booking process again
+    foreach ($_POST as $key => $value) {
+      print '<input type="hidden" name="'. $key.'" value="'.$value.'" />';
+    }
+
+    print '<input data-theme="f" type="submit" name="submit"  value="re Book" />';
+    print '</form>';
   }
   //
   // strip card details
@@ -1234,7 +1243,7 @@ $headers = 'From: site@essentialhotels.co.uk' . "\r\n" .
 mail($email_booking_to, $subject, $message, $headers);
 
 ?>
--->
+
 
 </body>
 </html><?php

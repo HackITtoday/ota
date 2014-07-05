@@ -5,11 +5,12 @@ $live = "https://api.venere.com/xhi-1.0";
 
 $email_booking_to = "nick@essential-hotels.com";
 
-if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 ) ) {
+if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 ) || (isset($_POST['ota']) && $_POST['ota'] == 3) ) {
 	$live = $debug;
 	$_SESSION['debug'] = 1;
 	$email_booking_to = "marcus7777@gmail.com";
         $title = 'debug mode ::';
+        
 }
 //Data, connection, auth
 $title = '';
@@ -23,6 +24,8 @@ $UserID = $soapUser;
 $UserPSW = $soapPassword;
 
 $laterooms_booking_url = "https://xmlbookingwrapperuat.laterooms.com/XmlBooking.asmx";
+$laterooms_feed_url = "http://xmlfeed.laterooms.com/index.aspx";
+$laterooms_feed_url = "http://xmlcache.uat.laterooms.com/index.aspx";
 $laterooms_id = "3095";
 $laterooms_Username = "nick@e-travelguide.info";
 $laterooms_Password = "marjorie";

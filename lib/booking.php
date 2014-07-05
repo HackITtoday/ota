@@ -48,6 +48,7 @@ if (isset($_POST['quantity']) &&  isset($_POST['HotelID']) && isset($_POST['Avai
   @print '<input type="hidden" name="quantity" value="'. $_POST['quantity'] .'" />';
   @print '<input type="hidden" name="date-in" value="'. $_POST['date-in'] .'" />';
   @print '<input type="hidden" name="date-out" value="'. $_POST['date-out'] .'" />';
+  @print '<input type="hidden" name="nights" value="'. $_POST['nights'] .'" />';
   @print '<input type="hidden" name="ota" value="'. $_POST['ota'] .'" />';
   @print '<input type="hidden" name="pay_at" value="'. $_POST['athotel'] . $_POST['paynow']  .'" />';
   @print '<input type="hidden" name="AvailBookingToken" value="'. $_POST['AvailBookingToken'] .'" />';
@@ -95,7 +96,7 @@ if (isset($_POST['quantity']) &&  isset($_POST['HotelID']) && isset($_POST['Avai
   </td ><td  >
   <input data-theme="f" id="phone" type="text" name="phone" value="<?php @print $_POST['phone']; ?>" placeholder="07123456789" required parsley-type="phone" />
 </td ></tr >
-<?php if ($_POST['ota'] == 1) { ?> 
+<?php if ($_POST['ota'] != 1) { ?> 
 <tr ><td > 
   <label for="address1" >Address</label>
   </td ><td >
@@ -447,17 +448,41 @@ jQuery('#ccnumber').validateCreditCard(function(result) {
     jQuery('#ccnumber').addClass('check');
     if (result.card_type.name) {
       if (result.card_type.name == 'amex') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "AX" );
+<?php } else { ?>
+        jQuery('#cctype').val( "4" );
+<?php } ?>
       } else if (result.card_type.name == 'diners_club_carte_blanche') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "DN" );
+<?php } else { ?>
+        jQuery('#cctype').val( "7" );
+<?php } ?>
       } else if (result.card_type.name == 'diners_club_international') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "DN" );
+<?php } else { ?>
+        jQuery('#cctype').val( "7" );
+<?php } ?>
       } else if (result.card_type.name == 'mastercard') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "MC" );
+<?php } else { ?>
+        jQuery('#cctype').val( "2" );
+<?php } ?>
       } else if (result.card_type.name == 'visa') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "VI" );
+<?php } else { ?>
+        jQuery('#cctype').val( "1" );
+<?php } ?>
       } else if (result.card_type.name == 'discover') {
+<?php if ($_POST['ota'] == 1) { ?> 
         jQuery('#cctype').val( "DI" );
+<?php } else { ?>
+        jQuery('#cctype').val( "" );
+<?php } ?>
       }
     }
 
@@ -487,3 +512,17 @@ JC
 JCB
  */
 
+  if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 ) ) {
+    // debug
+  print print_r($response,1);
+    print_r($array);
+    print_r($_POST);
+    print ($message);
+    print '<form method="post" data-ajax="false" >'; //  I've added this form, so that i can test the booking process without having to go through the booking process again
+    foreach ($_POST as $key => $value) {
+      print '<input type="hidden" name="'. $key.'" value="'.$value.'" />';
+    }
+
+    print '<input data-theme="f" type="submit" name="submit"  value="re choise room" />';
+    print '</form>';
+  }

@@ -447,7 +447,7 @@ if ($ota == "1") { // verene
 
   }
   foreach ($mapped as $Type => $map ) {
-    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $dateTo, $people);
+    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people);
   }
   $facilities = $array['hotel']['facilities']['facility'];
 
@@ -460,7 +460,7 @@ if ($ota == "1") { // verene
   // print_r($array['hotel']);
 }
 
-function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $dateTo, $people) {
+function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people) {
   if ($Type) {
     print "<div class='topbox'>";
     print   "<img class='room phone-only' src=" . $map['images'] . " />";
@@ -470,7 +470,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
       print   "<h3>" . $map['display_title'] . "</h3>";
     }
     foreach ($rooms_array as $room) {
-      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $dateTo, $people ); 
+      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people ); 
     }
     if ( count($rooms_array) == 0 ) {
       print '<div id="norooms" style="font-family:Roboto, sans-serif; font-size:20px; color:#ff3300; font-weight:300;"> This room have not been advertised on-line you will need to phone us: <a href="tel:01189714700" >0118 971 4700</a></div>';
@@ -478,12 +478,12 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
     print "</div><div style='clear:both' ></div>"; 
   }
 }
-function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $dateTo, $people) {
+function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people) {
   $Price = $room['Price'];
   $Cancellation_policy = $room['Cancellation_policy'] ;
   $ValueAddDisplay = $room['ValueAddDisplay'];
 
-  if ( $Price ) { 
+  if ( $Price ) {
     print '<form data-ajax="false" method="post" action="/venere/lib/booking.php" class="roomcards top"><div id="roomcards" class="roomcards">';
     if (count($ValueAddDisplay)) { 
       print '<span style=" display: inline-block;" class="extra">';
@@ -510,6 +510,8 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<input type="hidden" name="quantity" value="'. $num_rooms .'" />';
     print '<input type="hidden" name="AvailBookingToken" value="laterooms" />';
     print '<input type="hidden" name="date-in" value="'. $dateFrom .'" />';
+    print '<input type="hidden" name="nights" value="'. $nights .'" />';
+    print '<input type="hidden" name="people" value="'. $people .'" />';
     print '<input type="hidden" name="status" value="'. $title .' in the '.  $display_r  .' for a Total Amount of '. $Price .' for '. strip_tags($people_display) .'" />';
     print '<input type="hidden" name="Clause" value="'. $room['Formatted_cancellation_policy'] . '" />';
     print '<input type="hidden" name="date-out" value="'.$dateTo.'" />';
