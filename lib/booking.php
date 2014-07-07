@@ -381,7 +381,7 @@ if (isset($_POST['quantity']) &&  isset($_POST['HotelID']) && isset($_POST['Avai
 <tr ><td >     
         <label for="ccnumber" >Card Number</label>
   </td ><td >
-        <input data-theme="f" id="ccnumber" autocomplete="cc-number" name="ccnumber" value="<?php @print $_POST['ccnumber']; ?>" placeholder="xxxx xxxx xxxx xxxx" required /> 
+        <input data-theme="f" id="ccnumber" autocomplete="cc-number" name="ccnumber" value="<?php @print $_POST['ccnumber']; ?>" placeholder="xxxx xxxx xxxx xxxx" required data-parsley-cardno /> 
 </td ></tr >
 
 <input id="cctype" name="cctype" type="hidden" /> 
@@ -432,6 +432,21 @@ jQuery( "input#firstname" ).on( "blur", function() {
     return val;
   });
 });
+window.ParsleyConfig = {
+  validators: {
+    cardno : {
+      fn: function (value, requirement) {
+        return jQuery('#ccnumber.check').is('#ccnumber.check');
+      },
+      priority: 32
+    }
+  },
+  i18n: {
+    en: {
+      cardno : 'Please check your card number.'
+    }
+  }
+};
 jQuery( "input#surname" ).on( "blur", function() {
   jQuery( this ).val(function( i, val ) {
     jQuery( "input#ccHolderLastName" ).val(val.toUpperCase());
@@ -445,7 +460,6 @@ jQuery('#ccnumber').validateCreditCard(function(result) {
       + '\nLuhn validation: + result.luhn_valid'); 
    jQuery('#ccnumber').addClass( result.card_type.name ); */
   if (result.length_valid) {
-    jQuery('#ccnumber').addClass('check');
     if (result.card_type.name) {
       if (result.card_type.name == 'amex') {
 <?php if ($_POST['ota'] == 1) { ?> 
@@ -485,15 +499,19 @@ jQuery('#ccnumber').validateCreditCard(function(result) {
 <?php } ?>
       }
     }
-
-    jQuery('[type="submit"]').parent('.ui-btn').removeClass('ui-disabled');  
-
+    if (result.luhn_valid) {
+      jQuery('[type="submit"]').parent('.ui-btn').removeClass('ui-disabled');  
+      jQuery('#ccnumber').addClass('check');
+    }
   } else {
     jQuery('#cctype').val("");
     jQuery('#ccnumber').removeClass('check');
     jQuery('[type="submit"]').parent('.ui-btn').addClass('ui-disabled'); 
   }
 });
+setTimeout(function() {
+  jQuery('[type="submit"]').parent('.ui-btn').addClass('ui-disabled'); 
+}, 2000);
   </script>
 
   </body>

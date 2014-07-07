@@ -12,6 +12,11 @@ include './auth.php';
 
 //variables 
 $dateFrom = date('Y-m-d', strtotime($_POST['date']));
+
+      if ($_POST['debug']){ 
+        print_r($_POST['date-out'],1);
+        print "asdf -- ". print_r($dateFrom  . ' + ' . $_POST['nights'] .' days',1);
+      }
 $dateTo = date('Y-m-d', strtotime($dateFrom  . ' + ' . $_POST['nights'] .' days'));
 $nights = $_POST['nights'];
 
@@ -388,34 +393,20 @@ if ($ota == "1") { // verene
   $array = json_decode(json_encode((array) $xml), 1);
   //print_r ($array);
   //print_r ($mapped);
+  
+  if (!isset($hotel_name) || (isset($hotel_name) && trim($hotel_name) == "")) {
+    $hotel_name = $array['hotel']['hotel_name'];
+  }
 
   $title = "";
   if ($array['response']['@attributes']['status'] == '1' ) {
-    if ( isset($array['hotel']['hotel_name']) ){
-      if ($_POST['nights'] == "1") {
-        $title .= "Booking at the " . $array['hotel']['hotel_name'] . " staying " . $_POST['date-in'] . " for one night";
-      } else {
-        $title .= "Booking at the ".$array['hotel']['hotel_name'] . " staying " . $_POST['date-in'] . " for " . $_POST['nights'] . " nights";
-      }
-    } else {
-      if ($_POST['nights'] == "1") {
-        $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['night'] . " night for " .$people_display  ;
-      } else {
-        $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights for " .$people_display  ;
-      }
-    }
-  } elseif (isset($hotel_name) ){
     if ($_POST['nights'] == "1") {
       $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " night";
     } else {
       $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights";
     }
   } else {
-    if ($_POST['nights'] == "1") {
-      $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " night for " .$people_display  ;
-    } else {
-      $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights for " .$people_display  ;
-    }
+    $title = "Phone us";
   }
   include('../inc/top.php');
   include('../inc/header.php');
@@ -447,7 +438,7 @@ if ($ota == "1") { // verene
 
   }
   foreach ($mapped as $Type => $map ) {
-    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people);
+    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people,$hotel_name);
   }
   $facilities = $array['hotel']['facilities']['facility'];
 
@@ -460,7 +451,7 @@ if ($ota == "1") { // verene
   // print_r($array['hotel']);
 }
 
-function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people) {
+function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
   if ($Type) {
     print "<div class='topbox'>";
     print   "<img class='room phone-only' src=" . $map['images'] . " />";
@@ -470,7 +461,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
       print   "<h3>" . $map['display_title'] . "</h3>";
     }
     foreach ($rooms_array as $room) {
-      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people ); 
+      print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people,$hotel_name ); 
     }
     if ( count($rooms_array) == 0 ) {
       print '<div id="norooms" style="font-family:Roboto, sans-serif; font-size:20px; color:#ff3300; font-weight:300;"> This room have not been advertised on-line you will need to phone us: <a href="tel:01189714700" >0118 971 4700</a></div>';
@@ -478,7 +469,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
     print "</div><div style='clear:both' ></div>"; 
   }
 }
-function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people) {
+function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
   $Price = $room['Price'];
   $Cancellation_policy = $room['Cancellation_policy'] ;
   $ValueAddDisplay = $room['ValueAddDisplay'];
@@ -510,6 +501,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<input type="hidden" name="quantity" value="'. $num_rooms .'" />';
     print '<input type="hidden" name="AvailBookingToken" value="laterooms" />';
     print '<input type="hidden" name="date-in" value="'. $dateFrom .'" />';
+    print '<input type="hidden" name="date-out" value="'. $dateTo .'" />';
     print '<input type="hidden" name="nights" value="'. $nights .'" />';
     print '<input type="hidden" name="people" value="'. $people .'" />';
     print '<input type="hidden" name="status" value="'. $title .' in the '.  $display_r  .' for a Total Amount of '. $Price .' for '. strip_tags($people_display) .'" />';
@@ -517,7 +509,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<input type="hidden" name="date-out" value="'.$dateTo.'" />';
     print '<input type="hidden" name="sellingMethod" value="'.'" />';
     print '<input type="hidden" name="prepaid" value="'.'" />';
-    print '<input type="hidden" name="hotel" value="'.'" />';
+    print '<input type="hidden" name="hotel" value="'. $hotel_name .'" />';
    @print '<input type="hidden" name="ota" value="'. $_POST['ota'] .'" />';
    if (isset( $_POST['debug'] )) { print '<input type="hidden" name="debug" value="'. $_POST['debug'] .'" />'; }
     if (isset( $_GET['debug'] )) { print '<input type="hidden" name="debug" value="'. $_GET['debug'] .'" />'; }

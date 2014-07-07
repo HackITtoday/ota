@@ -991,13 +991,8 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
 
   // PHP cURL  for https connection with auth
   $ch = curl_init();
-  // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  //curl_setopt($ch, CURLOPT_USERPWD, $soapUser.":".$soapPassword); // username and password - declared in auth.php
-  //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-  //curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-  //curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string); // the SOAP request
   //curl_setopt($ch, CURLOPT_HTTPHEADER, $xml_headers);
   curl_setopt($ch, CURLOPT_HEADER,true); 
@@ -1005,7 +1000,7 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   // converting
   $response = curl_exec($ch); 
 
-  print "<!-- " . print_r($response,1) ." -->";
+  print "<!-- response from venere " . print_r($response,1) ." -->";
   curl_close($ch);
 
   // converting
@@ -1019,9 +1014,11 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   // $xml = simplexml_load_string($response2);
   $array = json_decode(json_encode((array) $xml), 1);
 
-  print "<!-- " . print_r($xml,1) ." -->";
+  print "<!-- xml from venere " . print_r($xml,1) ." -->";
   //
   // on page :
+  //
+  
   if ($array['XHI_HotelResRS']['@attributes']['reservationID']) {
     print 'All done Thank You for Booking with Essential Hotels. Your Reservation ID is ' . $array['XHI_HotelResRS']['@attributes']['reservationID'];
 
@@ -1032,11 +1029,10 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-    $message = '<html><head><meta charset="UTF-8"></head><body>';
     $message .= '<center><h3>I am pleased to confirm your reservation<br /></h3></center>';
     $message .= '<center><h3>'. strip_tags($_POST['status']).'<br /></h3></center>';
     $message .= '<center><h3>Please Check the details below and let us know if anything is incorrect<br /></h3></center>';
-    $message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+    $message .= '<table rules="all" style="border-color:#666 ; max-width: 721px;" cellpadding="10">';
     $message .= "<tr><td><strong>Name of Hotel</strong> </td><td>" . strip_tags($_POST['hotel']) . "</td></tr>";
     $message .= "<tr><td><strong>Booking made under the Name</strong> </td><td>" . $array['XHI_HotelResRS']['BookingGuestDetails']['@attributes']['name'] . ' ' . $array['XHI_HotelResRS']['BookingGuestDetails']['@attributes']['surname'] . "</td></tr>";
     $message .= "<tr><td><strong>Staying</strong> </td><td>" . $_POST['date-in'] . ' to the ' . $_POST['date-out'] . "</td></tr>";
@@ -1054,7 +1050,8 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
       Marjorie Burrington | Director of Operations<br />
       Essential Hotels<br />
       Willowmead House, Mill Lane, Padworth RG7 4JX<br /></h3></center>';
-    $message .= "</body></html>";
+    print $message;
+    $message = '<html><head><meta charset="UTF-8"></head><body>' . $message . "</body></html>";
 
     mail($_POST['email'], $subject, $message, $headers);
 
@@ -1069,9 +1066,8 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
     $headers .= 'Bcc: nick@essential-hotels.com' . "\r\n";
 
-    $message = '<html><body>';
     $message .= '<center><h3>Contact Us Direct by Phone: <a href="tel:01189714700" >0118 971 4700</a> <br /> or replay to this email</h3></center>';
-    $message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+    $message .= '<table rules="all" style="border-color:#666 ; max-width: 721px;" cellpadding="10">';
     $message .= "<tr><td><strong>Name of Hotel</strong> </td><td>" . strip_tags($_POST['hotel']) . "</td></tr>";
     $message .= "<tr><td><strong>Cost</strong> </td><td>" . $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']['totalPrice'] . "</td></tr>";
     $message .= "<tr><td><strong>Essential Rewards</strong></td><td>As a Rewards member there’s still time to be rewarded for your upcoming stay. 
@@ -1084,7 +1080,8 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
       Marjorie Burrington | Director of Operations<br />
       Essential Hotels<br />
       Willowmead House, Mill Lane, Padworth RG7 4JX<br /></h3></center>';
-    $message .= "</body></html>";
+    print $message;
+    $message = '<html><head><meta charset="UTF-8"></head><body>' . $message . "</body></html>";
     if ($_POST['debug'] == "1") { 
       print_r($_POST);
     } else {
@@ -1132,17 +1129,15 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   $Initials = $_POST['Initials']; // => J
   $nights = (int) $_POST['nights']; // => 1
 
-  print "<!-- Post :" . print_r($_POST,1) ." -->";
-  print "<!-- nights " . print_r($nights,1) ." -->";
   include './template.php';
 
   $xml_post_string = str_replace(Array("  ","   ","    ","     ","      ","       ","        ","\t","\n")," ",$template['lateroom_booking']); // remove whitespace from XML
   $xml_post_string = str_replace(Array("  ","   ","    ")," ",$xml_post_string ); // remove remaning whitespace from XML
   $xml_post_string = utf8_encode ( $xml_post_string);  // to make sure it is utf8 encoded
 
-  print "<!-- " . print_r($xml_post_string,1) ." -->";  //  this is printed for debugging purposes
+  print "<!-- xml_post_string " . print_r($xml_post_string,1) ." -->";  //  this is printed for debugging purposes
   $url = $laterooms_booking_url ;  //  get the url from the  authorisation document
-  print "<!-- " . print_r($url,1) ." -->"; // //  this is printed for debugging purposes
+  print "<!-- to url " . print_r($url,1) ." -->"; // //  this is printed for debugging purposes
   
 
   $xml_headers = array(
@@ -1152,46 +1147,128 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     "request-type: makeBooking",
   );
   
-  // PHP cURL  for https connection with auth
+   // PHP cURL  for https connection with auth
   $ch = curl_init();
-//  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
   curl_setopt($ch, CURLOPT_URL, $url);
-//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//  curl_setopt($ch, CURLOPT_USERPWD, $laterooms_Username.":".$laterooms_Password); // username and password - declared in auth.php
-//  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-//  curl_setopt($ch, CURLOPT_TIMEOUT, 10);
   curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string); // the SOAP request
   curl_setopt($ch, CURLOPT_HTTPHEADER, $xml_headers);
   curl_setopt($ch, CURLOPT_HEADER,true); 
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
   // converting
   $response = curl_exec($ch); 
-
   curl_close($ch);
-
-  // converting
-  $response1 = str_replace("<soap:Body>","",$response);
-  $response2 = str_replace("</soap:Body>","",$response1);
-
-  $response_array = explode("<soap:Envelope",$response2 );
-
-  $xml = simplexml_load_string("<soap:Envelope". $response_array[1]);
-
-  // $xml = simplexml_load_string($response2);
+  $response_array = explode("soap:Body>",$response );
+  $xml = simplexml_load_string(substr($response_array[1],0,-2));
   $array = json_decode(json_encode((array) $xml), 1);
+  // Set varible for mail
+  if (isset($array['Booking']['Reference'])) {
+    $reservationID = $array['Booking']['Reference'];
+    $hotel = $array['Booking']['HotelName'];
+    $price = $_POST['totalPrice']; 
+    $guest_name = $array['Booking']['Rooms']['Room']['MainGuest'];
+    if ($_POST['date-out'] == "" && (int) $_POST['nights'] > 0) {
+      $_POST['date-out'] = date('Y-m-d', strtotime($_POST['date-in']  . ' + ' . $_POST['nights'] .' days'));
+      $_POST['date-out'] = date('Y-m-d', strtotime($_POST['date-in']  . ' + ' . $_POST['nights'] .' days'));
+      if ($_POST['debug']){ 
+        print_r($_POST['date-out'],1);
+        print "asdf -- ". print_r($_POST['date-in']  . ' + ' . $_POST['nights'] .' days',1);
+      }
+    }
+  } else {
+    $reservationID = 0;
+  }
 
-  print "<!-- " . print_r($xml,1) ." -->";
+  if ($reservationID) {
+    print 'All done Thank You for Booking with Essential Hotels. Your Reservation ID is ' . $reservationID ;
 
+    $subject = 'Your stay at the '. $hotel .' details.';
+
+    $headers = "From: " . $email_booking_to . "\r\n";
+    $headers .= "Reply-To: ". $email_booking_to . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+    $message .= '<center><h3>I am pleased to confirm your reservation<br /></h3></center>';
+    $message .= '<center><h3>'. strip_tags($_POST['status']).'<br /></h3></center>';
+    $message .= '<center><h3>Please Check the details below and let us know if anything is incorrect<br /></h3></center>';
+    $message .= '<table rules="all" style="border-color:#666 ; max-width: 721px;" cellpadding="10">';
+    $message .= "<tr><td><strong>Name of Hotel</strong> </td><td>" . $hotel . "</td></tr>";
+    $message .= "<tr><td><strong>Booking made under the Name</strong> </td><td>" . $guest_name . "</td></tr>";
+    $message .= "<tr><td><strong>Staying</strong> </td><td>" . $_POST['date-in'] . ' to the ' . $_POST['date-out'] . "</td></tr>";
+    $message .= "<tr><td><strong>Booking ID</strong> </td><td>" . $reservationID . "</td></tr>";
+    $message .= "<tr><td><strong>Cost</strong> </td><td> " . $price . "</td></tr>";
+    $message .= "<tr><td><strong>Essential Rewards</strong></td><td>As a Rewards member there’s still time to be rewarded for your upcoming stay. 
+      Please reply to this email with your membership details. If you’re not already a Member, enrol today to begin earning High Street shopping vouchers.</td></tr>";
+    $message .= "<tr><td><strong>Payment Method</strong></td><td>Upon departure. The credit/debit card details that you have supplied have guaranteed your reservation; no payment has been deducted from this card.</td></tr>";
+    $message .= "<tr><td><strong>Cancellation Policy</strong></td><td>" . $_POST['Clause']. "</td></tr>";
+    $message .= "</table>";
+    $message .= '<center><h3>Thank you for booking with essentialhotels; we hope you have an enjoyable stay and would be delighted to <br />
+      assist with any future bookings (UK or worldwide).  <br />
+      Kind regards <br />
+      Marjorie Burrington | Director of Operations<br />
+      Essential Hotels<br />
+      Willowmead House, Mill Lane, Padworth RG7 4JX<br /></h3></center>';
+    print $message;
+    $message = '<html><head><meta charset="UTF-8"></head><body>' . $message . "</body></html>";
+
+    if ($_POST['debug'] == "1") { 
+    } else {
+      mail($_POST['email'], $subject, $message, $headers);
+    }
+
+  } else {
+    print 'We cannot confirm this booking at the moment. Please contact us directly by phone or by email:<a href="tel:01189714700">0118 971 4700</a> or by <a href="nick@essential-hotels.com" >Email</a> or Online';
+
+    $subject = 'Your stay at the '. $hotel .' details.';
+
+    $headers = "From: " . $email_booking_to . "\r\n";
+    $headers .= "Reply-To: ". $email_booking_to . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $headers .= 'Bcc: nick@essential-hotels.com' . "\r\n";
+
+    $message .= '<center><h3>Contact Us Direct by Phone: <a href="tel:01189714700" >0118 971 4700</a> <br /> or replay to this email</h3></center>';
+    $message .= '<table rules="all" style="border-color:#666 ; max-width: 721px;" cellpadding="10">';
+    $message .= "<tr><td><strong>Name of Hotel</strong> </td><td>" . $hotel . "</td></tr>";
+    $message .= "<tr><td><strong>Cost</strong> </td><td>" . $Price . "</td></tr>";
+    $message .= "<tr><td><strong>Essential Rewards</strong></td><td>As a Rewards member there’s still time to be rewarded for your upcoming stay. 
+      Please reply to this email with your membership details. If you’re not already a Member, enrol today to begin earning High Street shopping vouchers.</td></tr>";
+    $message .= "<tr><td><strong>Payment Method</strong></td><td>Upon departure. The credit/debit card details that you have supplied have guaranteed your reservation; no payment has been deducted from this card.</td></tr>";
+    $message .= "</table>";
+    $message .= '<center><h3>Thank you for booking with essentialhotels; we hope you have an enjoyable stay and would be delighted to </br>
+      assist with any future bookings (UK or worldwide).  <br />
+      Kind regards <br />
+      Marjorie Burrington | Director of Operations<br />
+      Essential Hotels<br />
+      Willowmead House, Mill Lane, Padworth RG7 4JX<br /></h3></center>';
+    print $message;
+    $message = '<html><head><meta charset="UTF-8"></head><body>' . $message . "</body></html>";
+    if ($_POST['debug'] == "1") { 
+    } else {
+      mail($_POST['email'], $subject, $message, $headers);
+    }
+  }
 ?></center>
 
 <?php 
   if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 ) ) {
     // debug
-  print print_r($response,1);
-    print_r($array);
-    print_r($_POST);
-    print ($message);
+    print "<pre>";
+    print "< !-- headers " .print_r($headers,1) . " -->";
+    print "< !-- subject " .print_r($subject,1) . " -->";
+    print "< !-- message " .print_r($message,1) . " -->";
+    print "</pre>";
+    print "<pre>";
+
+    print "< !-- r " . print_r($response,1) ." -->";
+    print "< !-- respo array " . print_r($response_array ,1) ." -->";
+    print "< !-- xml " . print_r($xml ,1) ." -->";
+    print "< !-- array for response " . print_r($array ,1) ." -->";
+
+    print $message;
+    print "</pre>";
     print '<form method="post" data-ajax="false" action="done.php" >'; //  I've added this form, so that i can test the booking process without having to go through the booking process again
     foreach ($_POST as $key => $value) {
       print '<input type="hidden" name="'. $key.'" value="'.$value.'" />';
@@ -1211,7 +1288,7 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
   // unset($_POST['ccexp_month']);
   // unset($_POST['ccexp_year']);
   // unset($_POST['ccexp']);
-// unset($_POST['cvc']);
+  // unset($_POST['cvc']);
 
 }
 if ($array['XHI_HotelResRS']['@attributes']['success'] == "true") {
@@ -1243,142 +1320,9 @@ $headers = 'From: site@essentialhotels.co.uk' . "\r\n" .
 mail($email_booking_to, $subject, $message, $headers);
 
 ?>
-
-
 </body>
 </html><?php
 $fp = fopen("./.ht.booking", "a");
 fwrite($fp, json_encode(Array("from-client" => $_POST,"XML Header" => $xml_headers,"Posted to URL" => $url,"Raw posted XML" => $xml_post_string, "from-venere" => $array, "Raw" => $response , )));
 fwrite($fp, PHP_EOL);
 fclose($fp);
-
-/*
- *
- * 
- <!-- $array['XHI_HotelResRS']['@attributes']['reservationID'] 
- $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']['start']
- $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']['numNights']
- $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']['totalPrice'] 
- $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']
- $array['XHI_HotelResRS']['BookingReservationDetails']['@attributes']
- $array['XHI_HotelResRS']['BookingGuestDetails']['@attributes']['email']
-Array
-(
-  [@attributes] => Array
-  (
-    [reservationID] => 19960952
-  )
-
-  [BookingReservationDetails] => Array
-  (
-    [@attributes] => Array
-    (
-      [start] => 2014-02-21
-      [end] => 2014-02-22
-      [totalPrice] => 371.0
-      [currencyCode] => GBP
-      [numNights] => 1
-      [averageDailyRates] => true
-      [propertyID] => 27625
-    )
-
-    [GuaranteeDetails] => Array
-    (
-      [@attributes] => Array
-      (
-        [ccNumber] => 4602020220202000
-      )
-
-    )
-
-    [BookingRoomsDetails] => Array
-    (
-      [@attributes] => Array
-      (
-        [size] => 1
-      )
-
-      [BookingRoomDetails] => Array
-      (
-        [@attributes] => Array
-        (
-          [roomID] => 70126
-          [roomName] => Executive Room
-          [quantity] => 1
-          [price] => 371.0
-        )
-
-      )
-
-    )
-
-  )
-
-  [BookingGuestDetails] => Array
-  (
-    [@attributes] => Array
-    (
-      [guestID] => 14644104
-      [name] => debug
-      [surname] => Hitchins
-      [city] => penzance
-      [email] => marcus7777@gmail.com
-      [countryCode] => GB
-      [zipCode] => TR18 4DZ
-      [langID] => en
-    )
-
-    [0] => Array
-    (
-      [@attributes] => Array
-      (
-        [number] => 7541386427
-        [internationalPrefix] => 0044
-      )
-
-    )
-
-  )
-
-  [CancellationPolicy] => Array
-  (
-    [Clause] => In order to provide our customers with very competitive rates, Venere may offer some room types whose payment cannot be refunded. The room you have booked is not refundable, this means that in case of cancellations or no-shows you will be charged the total amount of the reservation.
-  )
-
-)
-Array
-(
-  [HotelID] => 27625
-  [roomID] => 70126
-  [totalPrice] => 371.0
-  [ratePlanID] => 7341
-  [quantity] => 1
-  [date-in] => 2014-02-21
-  [date-out] => 2014-02-22
-  [pay_at] => 
-  [AvailBookingToken] => ZfU/gnVo/g+N+z3OKHDyQWkRq/vfIzpP9Ze65GDPG7Jr/5wQlGX28Cvtc20a/PVrKtXembyk0vOj/ri48Pn46nQsAqYuYGcfvtKE0H6+4M9HYRHe/DQZrlAzUw0GNa/TZ0RHkQ8v6B2fK8ypt7+JpUN8S6GL4h+AZV5km6vaeLwykwhYa918bHru/sbGS1SEy2FZlaxKM89OHzUrVkAGz62fXzNEFUqUZ1aPOAwptrJk3jiKDykwLLEkJ1xHMk5kDoGo7kT9UBMWHxSF7YODNkin0yH8BTUGfivlG7HkOC5AdRCXmQJPotA+dlObU5DkJR789ccmrObTSUE5fLvLOGRXqQbgQaUUa8ZOvPC4vQi3RBkLcuRbvZOxgGOW9XFYYHF2EGuGaCHKAvxKIaUMoqiGw/vXDWSemPipyP62+u8Xzu5ijnAR7EY6yGXoed/jzbJ+zpr4WNr53gF7WVhCGE9IqP4aZiqfdEnZMOdUBYgzUm+CM1DdLSlp3BFTIoOiUdxA0bvpdryrYUGBh1PqQEv6fvNAvuCAyaP0EdW9iYNCW+QWU6UvRn3h75XSFiqwBROcappkhpu7qK6Wt4Rk9ieOvj/iocIlkLModWV+UOtghD/X0ptm4dT4S1+tpufAb8l4f4s9eQFR3EDRu+l2vGdt2RqmbkA8XwuNpP23jVfbYLmbXgv+Tp+wjuRuOoBnGSk/cwDMBK1p/8nP0A1SL4OGDZj6NoSEZWudzadVQZn2+AWw21DHrp6FncjU0oI+1ddMrVcO+KDEI5ZpyL1Wy5aCtSBWOGa9nWW4IqoEGhZHYRHe/DQZrlAzUw0GNa/T1VXCjDGuzQc8GWJ6kqEtEtEl0HpPO2ylN3PO1MiomNQTgVGWq58foCdvVqbYA5cYnyvMqbe/iaXg218Crok9Q7vJTlUjtGPHw8jrlBr+t787KdKVJ8VDie2WVNbmziOrYou9krO1/gmJ+PfzIX3VfJYPqOyY/nMMqk7dG9mviChft6NG27dhxwk16KSPQLJlPR1Zi8Bh8WURlbuz8lCiDLofSVRI4Us0qk7dG9mviChUncrlMejaFVd371QebnxrdRwX40CF06ZlL9zaBrXPxZk4s4xVDYu+lBrxrYAntlxR4Xz3R+8PJjgBMMaEOgjb5R/MPi0Vm+MiwGosY5YzcWBp9zmx4AhnhR9YLO8AvMg+cIrX6lSib3965QTkuqNQsnPNGw2nW+zuwPYhx2zzDdJl/hIo1+0vhBPW1y1NmTxQhU5CefoA0m6gbonCYlHIDqxBwBI/RLS8+yUX2v6+P3XSGDFNEcTIkD7HU2fXJOOojqvWhM+TQTEigUK9DuateKbj4ExuQpTdJN9g2k/7+FI+mEkVYAhgCNtDEa7KhQ+zPBZ6XIGfdCjcmLrIo/iB
-  [sellingMethod] => DA
-  [hotel] => 41
-  [booking_key] => 
-  [total_people] => 
-  [tour] => 
-  [channel] => 
-  [firstname] => debug
-  [surname] => Hitchins
-  [email] => marcus7777@gmail.com
-  [phone] => 07541386427
-  [cityName] => penzance
-  [zipCode] => TR18 4DZ
-  [countryName] => GB
-  [ccHolderFirstName] => DEBUG
-  [ccHolderLastName] => HITCHINS
-  [ccnumber] => 4602 0202 2020 2000
-  [cctype] => VI
-  [ccexp_month] => 01
-  [ccexp_year] => 14
-  [ccexp] => 
-  [cvc] => 123
-  [submit] => book
-)            
---> */
-

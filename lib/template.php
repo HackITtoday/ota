@@ -1,5 +1,4 @@
 <?php
-  print "<!-- template.php : nights " . print_r($nights,1) ." -->";
 if (!isset($totalPrice)) {$totalPrice = 0; };
 if (!isset($date)) {$date = 0; };
 if (!isset($nights)) {$nights = 0; };
@@ -192,79 +191,5 @@ $template['lateroom_booking'] = '<soap:Envelope xmlns:soap="http://www.w3.org/20
         <ser:SpecialRequests></ser:SpecialRequests>
       </ser:b>
     </ser:makeBooking>
-  </soap:Body>
-</soap:Envelope>';
-
-$template['lateroom_booking_testing'] = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ser="http://www.laterooms.com/services">
-   <soap:Header/>
-   <soap:Body>
-      <ser:makeBooking>
-      <ser:b>
-          <ser:Partner>
-            <ser:Id>' . $laterooms_id . '</ser:Id>
-            <ser:Username>' . $laterooms_Username . '</ser:Username>
-            <ser:Password>' . $laterooms_Password . '</ser:Password>
-            <ser:Value/>
-          </ser:Partner>
-      <ser:Rooms>
-        <ser:room>
-          <ser:Id>' . $roomID . '</ser:Id>
-          <ser:GuestTitle>' . $guest_title . '</ser:GuestTitle>
-          <ser:GuestInitials>' . $Initials . '</ser:GuestInitials>
-          <ser:GuestSurname>' . $surname . '</ser:GuestSurname>
-          <ser:Adults>'// . $total_people 
-          . "1" . '</ser:Adults>
-          <ser:Children>0</ser:Children>
-          <ser:BedType>' . $BedType . '</ser:BedType>
-          <ser:FromWhiteLabel>true</ser:FromWhiteLabel>
-          <ser:Cost>' .preg_replace("/[^0-9.]/", "", $totalPrice) . '</ser:Cost>
-        </ser:room>
-       </ser:Rooms>
-       <ser:HotelId>' . $HotelID . '</ser:HotelId>
-       <ser:ArrivalDate>' . date('d/m/Y',strtotime($date_in)) . '</ser:ArrivalDate>
-      <ser:Nights>' . $nights . '</ser:Nights>
-      <ser:Currency>GBP</ser:Currency>
-      <ser:Guest>
-        <ser:Title>' . $guest_title . '</ser:Title>
-        <ser:Initials>' . $Initials . '</ser:Initials>
-        <ser:Surname>' . $surname . '</ser:Surname>
-        <ser:Email>' . $email . '</ser:Email>
-        <ser:Postcode>' . $zipCode . '</ser:Postcode>
-        <ser:Tel>' . $phone . '</ser:Tel>
-        <ser:SendEmailConfirmation>false</ser:SendEmailConfirmation>
-        <ser:Address1>' . $address1 . '</ser:Address1>
-        <ser:Town>' . $cityName . '</ser:Town>
-      </ser:Guest>
-  './/    <ser:Booker>
-  //      <ser:Title>' . $guest_title . '</ser:Title>
-  //      <ser:Initials>' . $Initials . '</ser:Initials>
-  //      <ser:Surname>' . $surname . '</ser:Surname>
-  //      <ser:Email>' . $email . '</ser:Email>
-  //      <ser:Postcode>' . $zipCode . '</ser:Postcode>
-  //      <ser:Tel>' . $phone . '</ser:Tel>
-  //      <ser:CountryOfResidence>'.$CountryOfResidence.'</ser:CountryOfResidence>
-  //      <ser:SendEmailConfirmation>false</ser:SendEmailConfirmation>
-  //      <ser:Address1>' . $Address1 . '</ser:Address1>
-  //      <ser:Town>' . $cityName . '</ser:Town>
-  //    </ser:Booker>
-  //    <ser:PaymentCard>
-  //      <ser:CardHolderName>' . $guest_title . " " . $Initials . " " . $surname . '</ser:CardHolderName>
-  //      <ser:CardType>' .preg_replace("/[^0-9,.]/", "", $ccType) . '</ser:CardType>
-  //      <ser:CardNumber>' .preg_replace("/[^0-9,.]/", "", $ccNumber) . '</ser:CardNumber>
-  //      <ser:ExpiryDate>' . preg_replace("/[^0-9,.]/", "",$ccExpmonth . $ccexp_year)  . '</ser:ExpiryDate>
-  //      <ser:IssueNumberOrStartDate>' . '</ser:IssueNumberOrStartDate>
-  //      <ser:SecurityCode>' . preg_replace("/[^0-9,.]/", "",$cvc) . '</ser:SecurityCode>
-  //    </ser:PaymentCard>
-  //    <ser:ReservationType></ser:ReservationType>
-  //    <ser:FromHotel>false</ser:FromHotel>
-  //    <ser:Language></ser:Language>
-  //    <ser:Unbranded>true</ser:Unbranded>
-  //    <ser:SendHotelNotification>true</ser:SendHotelNotification>
-  //    <ser:DoNotBook>false</ser:DoNotBook>
-  //    <ser:AutoReferralBooking>false</ser:AutoReferralBooking>
-  //    <ser:ArrivalTime></ser:ArrivalTime>
-  //    <ser:SpecialRequests></ser:SpecialRequests>
-    '</ser:b>
-  </ser:makeBooking>
   </soap:Body>
 </soap:Envelope>';
