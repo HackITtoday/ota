@@ -28,7 +28,7 @@ isset( $_GET['suitedisplay']  ) ? : $_GET['suitedisplay'] = "";
 
 ?>
 <center class="in-page" >
-  <form action="/venere/lib/find_rooms.php?id=<?php print $_GET['id'] ?>" method="post" style="max-width: 225px;" data-ajax="false" >
+  <form action="/ota/lib/find_rooms.php?id=<?php print $_GET['id'] ?>" method="post" style="max-width: 225px;" data-ajax="false" >
     <fieldset class="date-box" data-role="controlgroup" data-type="horizontal"  data-theme="f" > 
       <input type="date" name="date-in" id="date-in" value="Tonight" type="date"  data-theme="f" data-role="datebox" data-options='{"mode": "calbox","overrideDateFormat":"%Y-%m-%d","useFocus":true,"afterToday":true,"themeDate":"f"}'readonly="readonly" style="text-align:center;margin-left:-80px" />
 
