@@ -1,6 +1,6 @@
 <div id="logo">
 	<div id="headformat">
-	  <img alt="Essential Hotels 0118 971 4700" src="/wp-content/uploads/2014/03/EH-Logo-V12.png">
+	  <a href=/ title="Essential Hotels"><img alt="Essential Hotels 0118 971 4700" src="/wp-content/uploads/2014/03/EH-Logo-V12.png"></a>
 	  <br />
 	  <a href="tel:01189714700">0118 971 4700</a>
   	</div>
