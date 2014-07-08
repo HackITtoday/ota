@@ -254,14 +254,14 @@ if ($ota == "1") { // verene
                 $pay_at = "<span class='pay_at'>Pay now</span>";
               }
 
-              print '<form class="roomcards top" action="/venere/lib/booking.php" method="post" data-ajax="false">';	
+              print '<form class="roomcards top" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
               print '<div class="roomcards" id="roomcards">';
               print   '<span class="extra" style=" display: inline-block;" >';	
               print   '<h4>Includes</h4>';	
               print   str_ireplace(array("Included","Free"), "", $ValueAddDisplay);
               print   '</span>';	
 
-              print   '<a href="#!" class="cancelpolicy" class="tip" title="'. $room['GlobalCancellationPolicy']['@attributes']['policyDescription'] .'" >' . $room['GlobalCancellationPolicy']['@attributes']['policyLabel'] .' ' . $pay_at . '<img src="/venere/inc/images/information.gif" height="10" width="10"  /> </a>' ;
+              print   '<a href="#!" class="cancelpolicy" class="tip" title="'. $room['GlobalCancellationPolicy']['@attributes']['policyDescription'] .'" >' . $room['GlobalCancellationPolicy']['@attributes']['policyLabel'] .' ' . $pay_at . '<img src="/ota/inc/images/information.gif" height="10" width="10"  /> </a>' ;
               print   '<div id="totprice">';
               print    '<div id="smalltot">Total</div>';
               print   '<span>';			  
@@ -327,7 +327,7 @@ if ($ota == "1") { // verene
           }
            */
 
-              print '<form class="roomcards" action="/venere/lib/booking.php" method="post" data-ajax="false">';	
+              print '<form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
               print '<div class="roomcards" id="roomcards">';
               if (trim(strip_tags($ValueAddDisplay))) {
                 print   '<span class="extra" style="display: inline-block;" >';	
@@ -483,7 +483,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
   $ValueAddDisplay = $room['ValueAddDisplay'];
 
   if ( $Price ) {
-    print '<form data-ajax="false" method="post" action="/venere/lib/booking.php" class="roomcards top"><div id="roomcards" class="roomcards">';
+    print '<form data-ajax="false" method="post" action="/ota/lib/booking.php" class="roomcards top"><div id="roomcards" class="roomcards">';
     if (count($ValueAddDisplay)) { 
       print '<span style=" display: inline-block;" class="extra">';
         print '<h4>Includes</h4>';
@@ -494,7 +494,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     } 
     print '<a title="' . $room['Formatted_cancellation_policy'] . '" class="cancelpolicy ui-link" href="#!">' . $Cancellation_policy ;
     print '<span class="pay_at"></span>';
-    print '<img width="10" height="10" src="/venere/inc/images/information.gif"> </a>';
+    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
     print '<div id="totprice">';
     print   '<div id="smalltot">Total</div>';
     print   '<span>';			  
@@ -525,7 +525,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
 
   }
 }
-  // debug https://essentialhotels.co.uk/venere/out.php?doubleroom=&deluxeroom=&familyroom=&suiteroom=/2012/02/Mercure-Shakespeare-Hotel-Stratford-Junior-Suite.jpg&singleroom=/2012/02/Mercure-Shakespeare-Hotel-Stratford-Classic-Room.jpg&doublemap=&deluxemap=&familymap=&suitemap=Junior%20Suite,%201%20King%20Bed&singlemap=Classic&id=575&doubledisplay=Classic%20Twin%20Room&deluxedisplay=Executive%20Double%20Room&familydisplay=Executive%20Twin%20Room&ota=3&suitAedisplay=Junior%20Suite,%201%20King%20Bed&singledisplay=Classic%20Double%20or%20Twin%20Room,%201%20Double%20Bed
+  // debug https://essentialhotels.co.uk/ota/out.php?doubleroom=&deluxeroom=&familyroom=&suiteroom=/2012/02/Mercure-Shakespeare-Hotel-Stratford-Junior-Suite.jpg&singleroom=/2012/02/Mercure-Shakespeare-Hotel-Stratford-Classic-Room.jpg&doublemap=&deluxemap=&familymap=&suitemap=Junior%20Suite,%201%20King%20Bed&singlemap=Classic&id=575&doubledisplay=Classic%20Twin%20Room&deluxedisplay=Executive%20Double%20Room&familydisplay=Executive%20Twin%20Room&ota=3&suitAedisplay=Junior%20Suite,%201%20King%20Bed&singledisplay=Classic%20Double%20or%20Twin%20Room,%201%20Double%20Bed
 
   //  print_r( $_POST ); 
   //  print_r( $_GET ); 

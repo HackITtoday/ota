@@ -8,7 +8,7 @@
 <?php if ( (int) $_POST['ota'] == 1) { ?>
                 <img alt="Essential Hotels 0118 971 4700" src="/wp-content/uploads/2014/03/Powered-By.png">	
 <?php } else { ?>
-                <img alt="Essential Hotels 0118 971 4700" src="/venere/inc/images/laterooms.png">	
+                <img alt="Essential Hotels 0118 971 4700" src="/ota/inc/images/laterooms.png">	
 <?php } ?>
   	</div>
 </div>

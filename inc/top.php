@@ -7,9 +7,9 @@
 <base target="_parent" />
 <?php } ?>
 <link type="text/css" rel="stylesheet" href="/wp-content/themes/listings/functions/css/shortcodes.css">
-<link rel="stylesheet" type="text/css" href="/venere/inc/style.css" />
+<link rel="stylesheet" type="text/css" href="/ota/inc/style.css" />
 <?php if (!isset($_GET['no_js']) ) {?>
-<script type="text/javascript" src="/venere/inc/nights.js"></script>
+<script type="text/javascript" src="/ota/inc/nights.js"></script>
 <?php } ?>
 <?php if (!isset($_GET['doubleroom']) ) {?>
 <?php } ?>

@@ -39,7 +39,7 @@ if (isset($_GET['tour']) ) {
 
 ?>
 <center class="in-page" >
-<form action="/venere/lib/find_rooms.php?id=<?php print $_GET['id'] ?>" method="post" style="max-width: 225px;" data-ajax="false" >
+<form action="/ota/lib/find_rooms.php?id=<?php print $_GET['id'] ?>" method="post" style="max-width: 225px;" data-ajax="false" >
 <fieldset class="date-box" data-role="controlgroup" data-type="horizontal"  data-theme="f" > 
 		<input type="date" name="date-in" id="date-in" value="<?php
 echo date( "Y-m-d", strtotime( "today" ) );
