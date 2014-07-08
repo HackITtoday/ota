@@ -1170,7 +1170,6 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     $guest_name = $array['Booking']['Rooms']['Room']['MainGuest'];
     if ($_POST['date-out'] == "" && (int) $_POST['nights'] > 0) {
       $_POST['date-out'] = date('Y-m-d', strtotime($_POST['date-in']  . ' + ' . $_POST['nights'] .' days'));
-      $_POST['date-out'] = date('Y-m-d', strtotime($_POST['date-in']  . ' + ' . $_POST['nights'] .' days'));
       if ($_POST['debug']){ 
         print_r($_POST['date-out'],1);
         print "asdf -- ". print_r($_POST['date-in']  . ' + ' . $_POST['nights'] .' days',1);
