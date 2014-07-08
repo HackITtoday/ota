@@ -136,16 +136,16 @@ if ($ota == "1") { // verene
         }
       } else {
         if ($_POST['nights'] == "1") {
-          $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['night'] . " Night for " .$people_display  ;
+          $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night for " .$people_display  ;
         } else {
           $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights for " .$people_display  ;
         }
       }
     } elseif (isset($hotel_name) ){
       if ($_POST['nights'] == "1") {
-        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night";
+        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night for " .$people_display ;
       } else {
-        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights";
+        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights for " .$people_display;
       }
     } else {
       if ($_POST['nights'] == "1") {
@@ -387,13 +387,14 @@ if ($ota == "1") { // verene
       $facilities = explode(",", $amenities); 
     }
   }
-} else {
+} else { // laterooms
 
   $xml = simplexml_load_string(file_get_contents($template['lateroom_url']));
   $array = json_decode(json_encode((array) $xml), 1);
-  //print_r ($array);
-  //print_r ($mapped);
-  
+  if ($_POST['debug'] == 1) {
+    print '<per>' . print_r ($array) . '</per>';
+    print '<per>' . print_r ($mapped) . '</per>';
+  }
   if (!isset($hotel_name) || (isset($hotel_name) && trim($hotel_name) == "")) {
     $hotel_name = $array['hotel']['hotel_name'];
   }
@@ -401,9 +402,9 @@ if ($ota == "1") { // verene
   $title = "";
   if ($array['response']['@attributes']['status'] == '1' ) {
     if ($_POST['nights'] == "1") {
-      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " night";
+      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " night for " . $people_display;
     } else {
-      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights";
+      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights for " . $people_display;
     }
   } else {
     $title = "Phone us";
@@ -421,7 +422,14 @@ if ($ota == "1") { // verene
   if (isset($array['hotel']['lr_rates']['hotel_rooms']['room'])) foreach ($array['hotel']['lr_rates']['hotel_rooms']['room'] as $room) {
     $Id = $room['ref']; 
     $Type = strtolower($room['typedescription']);
-    $Price = $room['rate']['price'];
+    if (isset($room['rate']['price'])) {
+      $Price = $room['rate']['price'];
+    } elseif(is_array($room['rate'])) {
+      foreach ($room['rate'] as $price_for_night ) {
+        $Price += (float) $price_for_night['numeric_price'];
+      }
+      $Price = "£" . number_format($Price, 2, '.', '');
+    }
     $Cancellation_policy = $room['cancellation_policy'];
     $breakfast = $room['breakfast'];
     if ($room['breakfast'] == "true") {
