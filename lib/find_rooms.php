@@ -446,8 +446,15 @@ if ($ota == "1") { // verene
 
   }
   foreach ($mapped as $Type => $map ) {
-    print_room_type($map, $Type, $rooms,$rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people,$hotel_name);
+    print_room_type($map, $Type, $rooms, $rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people, $hotel_name);
+    unset($rooms_array[$Type]);
   }
+  $fp = fopen("./.ht.missing_rooms", "a");
+
+  fwrite($fp, json_encode(Array("Laterooms" => $rooms_array )));
+  fwrite($fp, PHP_EOL);
+  fclose($fp);
+
   $facilities = $array['hotel']['facilities']['facility'];
 
   print '<div id=facilities style="text-align: left; margin-left: 230px; font-family: Roboto, sans-serif; font-weight: 300;">
