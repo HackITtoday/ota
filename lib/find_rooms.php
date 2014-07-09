@@ -121,7 +121,9 @@ if ($ota == "1") { // verene
 
   $array = json_decode(json_encode((array) $xml), 1);
   if ($_GET['price']==1) {
-    if (isset($array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['minCostOfStay'])) print $array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['minCostOfStay'];
+    if (isset($array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['minCostOfStay'])) {
+      print $array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['minCostOfStay'];
+    }
   } else {
     // 
     // print "<!-- array " . print_r($array,1) ." -->";
@@ -183,8 +185,9 @@ if ($ota == "1") { // verene
                     $display['Family'][ $rooms['@attributes']['totalPrice'] ] = $rooms;	
                   } else if ($map['Suite'] == strtolower(trim($rooms['AvailRooms']['AvailRoom']['@attributes']['roomName'])) ) {
                     $display['Suite'][ $rooms['@attributes']['totalPrice'] ] = $rooms;
-                  } 
-
+                  } else { 
+                    $missing_rooms[] = $rooms['AvailRooms']['AvailRoom']['@attributes']['roomName'];
+                  }
                   //   print "<!-- more rooms " . print_r($rooms['AvailRooms']['AvailRoom']['@attributes']['totalPrice'],1) ." -->";
                 } elseif( isset($rooms['AvailRoom']) ) {
 
@@ -198,7 +201,9 @@ if ($ota == "1") { // verene
                     $display['Family'][ $rooms['AvailRoom']['@attributes']['totalPrice'] ]= $rooms;	
                   } else if ($map['Suite'] == strtolower(trim($rooms['AvailRoom']['@attributes']['roomName'])) ) {
                     $display['Suite'][ $rooms['AvailRoom']['@attributes']['totalPrice'] ]= $rooms;
-                  } 
+                  } else { 
+                    $missing_rooms[] = $rooms['AvailRooms']['AvailRoom']['@attributes']['roomName'];
+                  }
 
                   //        print "<!-- 1 rooms ";
                   //       print_r($rooms['AvailRoom']['@attributes']['totalPrice'],1);
@@ -212,6 +217,12 @@ if ($ota == "1") { // verene
     }
     $display_cont == 0;
 
+    if (count($missing_rooms)) {
+      $fp = fopen("./.ht.missing_rooms", "a");
+      fwrite($fp, json_encode(Array("Venere" => $rooms_array )));
+      fwrite($fp, PHP_EOL);
+      fclose($fp);
+    }
     print "<!-- display ". print_r($display ,1 ) ." -->";
     print "<!-- images ". print_r($images ,1 ) ." -->";
     foreach ($display as $type => $rooms ) {
@@ -387,6 +398,14 @@ if ($ota == "1") { // verene
       $facilities = explode(",", $amenities); 
     }
   }
+  
+  if (count($rooms_array)) {
+    $fp = fopen("./.ht.missing_rooms", "a");
+
+    fwrite($fp, json_encode(Array("Laterooms" => $rooms_array )));
+    fwrite($fp, PHP_EOL);
+    fclose($fp);
+  }
 } else { // laterooms
 
   $xml = simplexml_load_string(file_get_contents($template['lateroom_url']));
@@ -449,12 +468,13 @@ if ($ota == "1") { // verene
     print_room_type($map, $Type, $rooms, $rooms_array[$Type], $title, $people_display, $dateFrom, $nights, $people, $hotel_name);
     unset($rooms_array[$Type]);
   }
-  $fp = fopen("./.ht.missing_rooms", "a");
+  if (count($rooms_array)) {
+    $fp = fopen("./.ht.missing_rooms", "a");
 
-  fwrite($fp, json_encode(Array("Laterooms" => $rooms_array )));
-  fwrite($fp, PHP_EOL);
-  fclose($fp);
-
+    fwrite($fp, json_encode(Array("Laterooms" => $rooms_array )));
+    fwrite($fp, PHP_EOL);
+    fclose($fp);
+  }
   $facilities = $array['hotel']['facilities']['facility'];
 
   print '<div id=facilities style="text-align: left; margin-left: 230px; font-family: Roboto, sans-serif; font-weight: 300;">
