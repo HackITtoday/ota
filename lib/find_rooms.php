@@ -2,6 +2,7 @@
 // 
 // Find Roooms
 //
+
 if (!isset($display_cont)) {$display_cont = 0; };
 
 $title = "";
@@ -11,23 +12,23 @@ $site = 'essentialhotels.co.uk';
 include './auth.php';
 
 //variables 
-$dateFrom = date('Y-m-d', strtotime($_POST['date']));
+$dateFrom = date('Y-m-d', strtotime($_GET['date']));
 
-      if ($_POST['debug']){ 
-        print_r($_POST['date-out'],1);
-        print "asdf -- ". print_r($dateFrom  . ' + ' . $_POST['nights'] .' days',1);
+      if ($_GET['debug']){ 
+        print_r($_GET['date-out'],1);
+        print "asdf -- ". print_r($dateFrom  . ' + ' . $_GET['nights'] .' days',1);
       }
-$dateTo = date('Y-m-d', strtotime($dateFrom  . ' + ' . $_POST['nights'] .' days'));
-$nights = $_POST['nights'];
+$dateTo = date('Y-m-d', strtotime($dateFrom  . ' + ' . $_GET['nights'] .' days'));
+$nights = $_GET['nights'];
 
-// $dateTo = date('Y-m-d', strtotime($_POST['date-out']));
-if (((int) $_POST['hdura']) < ((int) $_POST['hdurr']) ) $_POST['hdura'] = $_POST['hdurr'] ; // if big people < rooms then big people = rooms 
+// $dateTo = date('Y-m-d', strtotime($_GET['date-out']));
+if (((int) $_GET['hdura']) < ((int) $_GET['hdurr']) ) $_GET['hdura'] = $_GET['hdurr'] ; // if big people < rooms then big people = rooms 
 
 $hotelId = (int) $_GET['id'];
 if ($hotelId == 0) {
   $hotel_name = $_GET['id'];
 }
-$people = ((int) $_POST['hdurc']) + ((int) $_POST['hdura']);
+$people = ((int) $_GET['hdurc']) + ((int) $_GET['hdura']);
 
 if ($people == 1) {
   $people_display =  $people . " guest";
@@ -35,30 +36,30 @@ if ($people == 1) {
   $people_display =  $people . " guests";
 }
 
-$rooms = ((int) $_POST['hdurr']);
+$rooms = ((int) $_GET['hdurr']);
 //xml post structure
 include './template.php';
 
 $images = Array();
-$images['Single'] = "/wp-content/uploads" . $_POST['images']['Single'] ;
-$images['Double'] = "/wp-content/uploads" . $_POST['images']['Double'] ;
-$images['Deluxe'] = "/wp-content/uploads" . $_POST['images']['Deluxe'] ;
-$images['Family'] = "/wp-content/uploads" . $_POST['images']['Family'] ;
-$images['Suite']  = "/wp-content/uploads" . $_POST['images']['Suite']  ;
+$images['Single'] = "/wp-content/uploads" . $_GET['images']['Single'] ;
+$images['Double'] = "/wp-content/uploads" . $_GET['images']['Double'] ;
+$images['Deluxe'] = "/wp-content/uploads" . $_GET['images']['Deluxe'] ;
+$images['Family'] = "/wp-content/uploads" . $_GET['images']['Family'] ;
+$images['Suite']  = "/wp-content/uploads" . $_GET['images']['Suite']  ;
 
 $map = Array();
-$map['Single'] = strtolower($_POST['map']['Single']) ;
-$map['Double'] = strtolower($_POST['map']['Double']) ;
-$map['Deluxe'] = strtolower($_POST['map']['Deluxe']) ;
-$map['Family'] = strtolower($_POST['map']['Family']) ;
-$map['Suite']  = strtolower($_POST['map']['Suite'] ) ;
+$map['Single'] = strtolower($_GET['map']['Single']) ;
+$map['Double'] = strtolower($_GET['map']['Double']) ;
+$map['Deluxe'] = strtolower($_GET['map']['Deluxe']) ;
+$map['Family'] = strtolower($_GET['map']['Family']) ;
+$map['Suite']  = strtolower($_GET['map']['Suite'] ) ;
 
 $display_title = Array();
-$display_title['Single'] = $_POST['display']['Single'] ;
-$display_title['Double'] = $_POST['display']['Double'] ;
-$display_title['Deluxe'] = $_POST['display']['Deluxe'] ;
-$display_title['Family'] = $_POST['display']['Family'] ;
-$display_title['Suite']  = $_POST['display']['Suite']  ;
+$display_title['Single'] = $_GET['display']['Single'] ;
+$display_title['Double'] = $_GET['display']['Double'] ;
+$display_title['Deluxe'] = $_GET['display']['Deluxe'] ;
+$display_title['Family'] = $_GET['display']['Family'] ;
+$display_title['Suite']  = $_GET['display']['Suite']  ;
 
 $display = Array();
 $display['Single'] = Array();	
@@ -75,7 +76,7 @@ foreach ($map as $type => $mapping) {
   }
 }
 
-if (isset($_POST['ota'])) $ota = $_POST['ota'];
+if (isset($_GET['ota'])) $ota = $_GET['ota'];
 if (isset($_GET['ota'])) $ota = $_GET['ota'];
 
 if ($ota == "1") { // verene
@@ -131,29 +132,29 @@ if ($ota == "1") { // verene
     $title = "";
     if ($array['XHI_HotelAvailRS']['@attributes']['success'] == 'true' && isset($array['XHI_HotelAvailRS']) ) {
       if ( isset($array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'])){
-        if ($_POST['nights'] == "1") {
-          $title .= "Booking at the ".$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name']." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night";
+        if ($_GET['nights'] == "1") {
+          $title .= "Booking at the ".$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name']." staying ".$_GET['date-in']." for ".$_GET['nights'] . " Night";
         } else {
-          $title .= "Booking at the ".$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name']." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights";
+          $title .= "Booking at the ".$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name']." staying ".$_GET['date-in']." for ".$_GET['nights'] . " Nights";
         }
       } else {
-        if ($_POST['nights'] == "1") {
-          $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night for " .$people_display  ;
+        if ($_GET['nights'] == "1") {
+          $title .= "Booking for staying ".$_GET['date-in']." for ".$_GET['nights'] . " Night for " .$people_display  ;
         } else {
-          $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights for " .$people_display  ;
+          $title .= "Booking for staying ".$_GET['date-in']." for ".$_GET['nights'] . " Nights for " .$people_display  ;
         }
       }
     } elseif (isset($hotel_name) ){
-      if ($_POST['nights'] == "1") {
-        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night for " .$people_display ;
+      if ($_GET['nights'] == "1") {
+        $title .= "Booking at the ". $hotel_name ." staying ".$_GET['date-in']." for ".$_GET['nights'] . " Night for " .$people_display ;
       } else {
-        $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights for " .$people_display;
+        $title .= "Booking at the ". $hotel_name ." staying ".$_GET['date-in']." for ".$_GET['nights'] . " Nights for " .$people_display;
       }
     } else {
-      if ($_POST['nights'] == "1") {
-        $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Night for " .$people_display  ;
+      if ($_GET['nights'] == "1") {
+        $title .= "Booking for staying ".$_GET['date-in']." for ".$_GET['nights'] . " Night for " .$people_display  ;
       } else {
-        $title .= "Booking for staying ".$_POST['date-in']." for ".$_POST['nights'] . " Nights for " .$people_display  ;
+        $title .= "Booking for staying ".$_GET['date-in']." for ".$_GET['nights'] . " Nights for " .$people_display  ;
       }
     }
 
@@ -293,7 +294,7 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="sellingMethod" value="'. $room['@attributes']['sellingMethod'] .'" />';
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRooms']['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
-              @print '<input type="hidden" name="ota" value="'. $_POST['ota'] .'" />';
+              @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
               print '</form>';
 
             } else {
@@ -368,7 +369,7 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="sellingMethod" value="'. $array['AvailResults']['AvailResult']['AvailStays']['AvailStay']['@attributes']['sellingMethod'] .'" />';
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
-              @print '<input type="hidden" name="ota" value="'. $_POST['ota'] .'" />';
+              @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
               print '</form>';
 
             }       
@@ -410,7 +411,7 @@ if ($ota == "1") { // verene
 
   $xml = simplexml_load_string(file_get_contents($template['lateroom_url']));
   $array = json_decode(json_encode((array) $xml), 1);
-  if ($_POST['debug'] == 1) {
+  if ($_GET['debug'] == 1) {
     print '<per>' . print_r ($array) . '</per>';
     print '<per>' . print_r ($mapped) . '</per>';
   }
@@ -420,10 +421,10 @@ if ($ota == "1") { // verene
 
   $title = "";
   if ($array['response']['@attributes']['status'] == '1' ) {
-    if ($_POST['nights'] == "1") {
-      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " night for " . $people_display;
+    if ($_GET['nights'] == "1") {
+      $title .= "Booking at the ". $hotel_name ." staying ".$_GET['date-in']." for ".$_GET['nights'] . " night for " . $people_display;
     } else {
-      $title .= "Booking at the ". $hotel_name ." staying ".$_POST['date-in']." for ".$_POST['nights'] . " nights for " . $people_display;
+      $title .= "Booking at the ". $hotel_name ." staying ".$_GET['date-in']." for ".$_GET['nights'] . " nights for " . $people_display;
     }
   } else {
     $title = "Phone us";
@@ -545,8 +546,8 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<input type="hidden" name="sellingMethod" value="'.'" />';
     print '<input type="hidden" name="prepaid" value="'.'" />';
     print '<input type="hidden" name="hotel" value="'. $hotel_name .'" />';
-   @print '<input type="hidden" name="ota" value="'. $_POST['ota'] .'" />';
-   if (isset( $_POST['debug'] )) { print '<input type="hidden" name="debug" value="'. $_POST['debug'] .'" />'; }
+   @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
+   if (isset( $_GET['debug'] )) { print '<input type="hidden" name="debug" value="'. $_GET['debug'] .'" />'; }
     if (isset( $_GET['debug'] )) { print '<input type="hidden" name="debug" value="'. $_GET['debug'] .'" />'; }
     print '</div></form><div style="clear:both" > </div>';
 
