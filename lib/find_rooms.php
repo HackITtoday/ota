@@ -520,7 +520,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
         } 
       print '</span>';
     } 
-    print '<a title="' . $room['Formatted_cancellation_policy'] . '" class="cancelpolicy ui-link" href="#!">' . $Cancellation_policy ;
+    print '<a title="' . $room['Formatted_cancellation_policy'] . '" class="cancelpolicy ui-link" href="#!">' . 'Cancellation policy';
     print '<span class="pay_at"></span>';
     print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
     print '<div id="totprice">';
