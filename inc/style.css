@@ -3340,10 +3340,12 @@ body .ui-submit {
     float:left;
 }
 .find-rooms .cancelpolicy {
-   display: inline-block;
-   padding: 15px;
-   text-align: left;
-   width: 130px;
+    display: inline-block;
+    font-size: 1.2em;
+    padding: 15px;
+    text-align: left;
+    text-decoration: underline;
+    width: 130px;
 }
 #ccnumber {
   text-align:center;

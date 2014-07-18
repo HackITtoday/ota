@@ -262,7 +262,7 @@ if ($ota == "1") { // verene
               if ($room['AvailRooms']['AvailRoom']['@attributes']['prepaid'] == "false") {
                 $pay_at = "<span class='pay_at'>Pay at hotel</span>";
               } else {
-                $pay_at = "<span class='pay_at'>Pay now</span>";
+                $pay_at = "<span class='pay_at'>Advanced Purchase-Non Cancellable</span>";
               }
 
               print '<form class="roomcards top" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
