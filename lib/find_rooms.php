@@ -522,9 +522,9 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     } 
     print '<a title="' . $room['Formatted_cancellation_policy'] . '" class="cancelpolicy ui-link" href="#!">'; 
     if (strpos($room['Formatted_cancellation_policy'] , 'advance purchase rate')) {
-      print  'Pay now ';
+      print  'Advanced Purchase-Non Cancellable';
     } else {
-      print  'Cancellation policy ';
+      print  'Cancellation policy';
     }
     print '<span class="pay_at"></span>';
     print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
