@@ -3337,7 +3337,7 @@ body .ui-submit {
     display: inline-block;
     text-align: center;
     min-width: 480px;
-    float:left;
+    float:right;
 }
 .find-rooms .cancelpolicy {
     display: inline-block;
@@ -3345,7 +3345,7 @@ body .ui-submit {
     padding: 15px;
     text-align: left;
     text-decoration: underline;
-    width: 130px;
+    width: 134px;
 }
 #ccnumber {
   text-align:center;
@@ -3419,6 +3419,7 @@ h3 {
 #roomcards {
 	font-size: 0.8em;
 	margin-top:29px;
+	float:right;
 }
 
 #cancelpolicy {
