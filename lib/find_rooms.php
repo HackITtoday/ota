@@ -411,9 +411,9 @@ if ($ota == "1") { // verene
 
   $xml = simplexml_load_string(file_get_contents($template['lateroom_url']));
   $array = json_decode(json_encode((array) $xml), 1);
-  if ($_GET['debug'] == 1) {
-   // print '<pre>' . print_r ($array,1) . '</pre>';
-    print '<pre>' . print_r ($mapped,1) . '</pre>';
+  if (isset($_GET['debug']) && (int) $_GET['debug'] != 0) {
+    if ((int) $_GET['debug'] > 1 ) print '<pre> ' . print_r ($array,1) . ' </pre>';
+    print '<pre> ' . print_r ($mapped,1) . ' </pre>';
   }
   if (!isset($hotel_name) || (isset($hotel_name) && trim($hotel_name) == "")) {
     $hotel_name = $array['hotel']['hotel_name'];
