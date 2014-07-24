@@ -13,12 +13,7 @@ if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug'])
   $_GET['debug'] = 1;
   $email_booking_to = "marcus7777@gmail.com";
   $title = 'debug mode ::';
-<<<<<<< HEAD
   $laterooms_booking_url = "https://xmlbookingwrapperuat.laterooms.com/XmlBooking.asmx";
-
-=======
-  $laterooms_booking_url = "https://xmlbooking.laterooms.com/XmlBooking.asmx";
->>>>>>> 49c8a74df4ba08b13966780dd0768aed0d02e0e8
 }
 //Data, connection, auth
 $title = '';
