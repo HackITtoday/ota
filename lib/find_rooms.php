@@ -443,8 +443,8 @@ if ($ota == "1") { // verene
       print '<pre> count($array[hotel][lr_rates][hotel_rooms]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
 }
 if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
-  $temp = $array['hotel']['lr_rates']['hotel_rooms']['room'];
-  unset($array['hotel']['lr_rates']['hotel_rooms']['room']);
+  $temp = $array['hotel']['lr_rates']['hotel_rooms'];
+  unset($array['hotel']['lr_rates']['hotel_rooms']);
   $array['hotel']['lr_rates']['hotel_rooms']['room'][] = $temp;
 }
 ?>
@@ -457,7 +457,7 @@ if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
     }
     $Id = $room['ref']; 
     $Type = strtolower($room['typedescription']);
-    if ($_GET['debug'] == 1) {
+    if ((int) $_GET['debug'] != 0) {
       print '<pre> Type >> ' . print_r ($Type,1) . '</pre>';
     }
 
