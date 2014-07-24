@@ -459,6 +459,7 @@ if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
     $Type = strtolower($room['typedescription']);
     if ((int) $_GET['debug'] != 0) {
       print '<pre> Type >> ' . print_r ($Type,1) . '</pre>';
+      print '<pre> room >> ' . print_r ($room,1) . '</pre>';
     }
 
     if (isset($room['rate']['price'])) {
