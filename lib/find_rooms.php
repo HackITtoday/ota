@@ -541,7 +541,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
   static $last_price;
 
   if ( $Price && $Price != $last_price) {
-    $last_price $Price;
+    $last_price = $Price;
     print '<form data-ajax="false" method="post" action="/ota/lib/booking.php" class="roomcards top"><div id="roomcards" class="roomcards">';
     if (count($ValueAddDisplay)) { 
       print '<span style=" display: inline-block;" class="extra">';
