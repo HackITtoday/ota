@@ -29,7 +29,6 @@ $UserID = $soapUser;
 $UserPSW = $soapPassword;
 
 $laterooms_feed_url = "http://xmlfeed.laterooms.com/index.aspx";
-$laterooms_feed_url = "http://xmlcache.uat.laterooms.com/index.aspx";
 $laterooms_id = "3095";
 $laterooms_Username = "nick@e-travelguide.info";
 $laterooms_Password = "marjorie";
