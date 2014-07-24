@@ -478,7 +478,7 @@ if ($_GET['debug'] == 2) {
     $Cancellation_policy = $room['cancellation_policy'];
     $breakfast = $room['breakfast'];
 
-    $ValueAddDisplay = Array():
+    $ValueAddDisplay = Array();
 
     if ($room['breakfast'] == "true") {
       $ValueAddDisplay[] = 'Breakfast';
