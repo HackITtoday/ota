@@ -442,11 +442,11 @@ if ($ota == "1") { // verene
       print '<pre> $array[hotel][lr_rates][hotel_rooms] :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
       print '<pre> count($array[hotel][lr_rates][hotel_rooms]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
 }
-if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
-  $temp = $array['hotel']['lr_rates']['hotel_rooms'];
-  unset($array['hotel']['lr_rates']['hotel_rooms']);
-  $array['hotel']['lr_rates']['hotel_rooms']['room'] = $temp;
-}
+//if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
+//  $temp = $array['hotel']['lr_rates']['hotel_rooms'];
+//  unset($array['hotel']['lr_rates']['hotel_rooms']);
+//  $array['hotel']['lr_rates']['hotel_rooms'] = $temp;
+//}
 ?>
 
 <center class="find-rooms">
