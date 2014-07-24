@@ -1171,8 +1171,7 @@ if (isset($_POST['AvailBookingToken']) && (string) $ota == "1") {
     if ($_POST['date-out'] == "" && (int) $_POST['nights'] > 0) {
       $_POST['date-out'] = date('Y-m-d', strtotime($_POST['date-in']  . ' + ' . $_POST['nights'] .' days'));
       if ($_POST['debug']){ 
-        print_r($_POST['date-out'],1);
-        print "asdf -- ". print_r($_POST['date-in']  . ' + ' . $_POST['nights'] .' days',1);
+        print_r($_POST,1);
       }
     }
   } else {
@@ -1322,6 +1321,9 @@ mail($email_booking_to, $subject, $message, $headers);
 </body>
 </html><?php
 $fp = fopen("./.ht.booking", "a");
-fwrite($fp, json_encode(Array("from-client" => $_POST,"XML Header" => $xml_headers,"Posted to URL" => $url,"Raw posted XML" => $xml_post_string, "from-venere" => $array, "Raw" => $response , )));
+fwrite($fp, json_encode(Array("from-client" => $_POST,"XML Header" => $xml_headers,"Posted to URL" => $url,"Raw posted XML" => $xml_post_string, "from-ota" => $array, "Raw" => $response , )));
 fwrite($fp, PHP_EOL);
 fclose($fp);
+if ($_POST['debug']){ 
+  print_r($_POST,1);
+}

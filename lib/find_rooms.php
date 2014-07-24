@@ -412,8 +412,8 @@ if ($ota == "1") { // verene
   $xml = simplexml_load_string(file_get_contents($template['lateroom_url']));
   $array = json_decode(json_encode((array) $xml), 1);
   if ($_GET['debug'] == 1) {
-    print '<per>' . print_r ($array) . '</per>';
-    print '<per>' . print_r ($mapped) . '</per>';
+   // print '<pre>' . print_r ($array,1) . '</pre>';
+    print '<pre>' . print_r ($mapped,1) . '</pre>';
   }
   if (!isset($hotel_name) || (isset($hotel_name) && trim($hotel_name) == "")) {
     $hotel_name = $array['hotel']['hotel_name'];
@@ -437,11 +437,27 @@ if ($ota == "1") { // verene
 <div id="specialoff" style="text-align:center;">
         <img src="/wp-content/uploads/2014/03/Phone-Only-Bookings-on-Rooms-V4.png" alt="Phone Only Special Offer">
 </div>
+
+<?php  if ($_GET['debug'] == 1) {
+      print '<pre> $array[hotel][lr_rates][hotel_rooms] :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
+      print '<pre> count($array[hotel][lr_rates][hotel_rooms]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
+}
+if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
+  $temp = $array['hotel']['lr_rates']['hotel_rooms']['room'];
+  unset($array['hotel']['lr_rates']['hotel_rooms']['room']);
+  $array['hotel']['lr_rates']['hotel_rooms']['room'][] = $temp;
+}
+?>
+
 <center class="find-rooms">
 <?php
   if (isset($array['hotel']['lr_rates']['hotel_rooms']['room'])) foreach ($array['hotel']['lr_rates']['hotel_rooms']['room'] as $room) {
+    if ($_GET['debug'] == 1) {
+      print '<pre> room :' . print_r ($room,1) . '</pre>';
+    }
     $Id = $room['ref']; 
     $Type = strtolower($room['typedescription']);
+    
     if (isset($room['rate']['price'])) {
       $Price = $room['rate']['price'];
     } elseif(is_array($room['rate'])) {
