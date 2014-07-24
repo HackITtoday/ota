@@ -14,10 +14,10 @@ include './auth.php';
 //variables 
 $dateFrom = date('Y-m-d', strtotime($_GET['date']));
 
-      if ($_GET['debug']){ 
-        print_r($_GET['date-out'],1);
-        print "asdf -- ". print_r($dateFrom  . ' + ' . $_GET['nights'] .' days',1);
-      }
+     // if ((int) $_GET['debug'] > 3){ 
+     //   print_r($_GET['date-out'],1);
+     //   print "asdf -- ". print_r($dateFrom  . ' + ' . $_GET['nights'] .' days',1);
+     // }
 $dateTo = date('Y-m-d', strtotime($dateFrom  . ' + ' . $_GET['nights'] .' days'));
 $nights = $_GET['nights'];
 
