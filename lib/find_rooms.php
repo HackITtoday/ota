@@ -438,7 +438,7 @@ if ($ota == "1") { // verene
         <img src="/wp-content/uploads/2014/03/Phone-Only-Bookings-on-Rooms-V4.png" alt="Phone Only Special Offer">
 </div>
 
-<?php  if ($_GET['debug'] == 1) {
+<?php  if ($_GET['debug'] == 2) {
       print '<pre> $array[hotel][lr_rates][hotel_rooms] :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
       print '<pre> count($array[hotel][lr_rates][hotel_rooms]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
 }
@@ -457,7 +457,10 @@ if (count($array['hotel']['lr_rates']['hotel_rooms']) == 1){
     }
     $Id = $room['ref']; 
     $Type = strtolower($room['typedescription']);
-    
+    if ($_GET['debug'] == 1) {
+      print '<pre> Type >> ' . print_r ($Type,1) . '</pre>';
+    }
+
     if (isset($room['rate']['price'])) {
       $Price = $room['rate']['price'];
     } elseif(is_array($room['rate'])) {
