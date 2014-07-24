@@ -5,12 +5,14 @@ $live = "https://api.venere.com/xhi-1.0";
 
 $laterooms_booking_url = "https://xmlbooking.laterooms.com/XmlBooking.asmx";
 $email_booking_to = "nick@essential-hotels.com";
-
-if (( isset($_POST['debug']) && $_POST['debug'] == 1) || ( isset($_GET['debug']) && $_GET['debug'] == 1) || ( isset($_SESSION['debug']) && $_SESSION['debug'] == 1 )  ) { //|| (isset($_POST['ota']) && $_POST['ota'] == 3)
+if ($_GET['debug'] == 0) {
+  $_SESSION['debug'] = 0;
+  $_POST['debug'] = 0;
+}
+if (( isset($_POST['debug']) && $_POST['debug'] != 0) || ( isset($_GET['debug']) && $_GET['debug'] != 0) || ( isset($_SESSION['debug']) && $_SESSION['debug'] != 0 )  ) { //|| (isset($_POST['ota']) && $_POST['ota'] == 3)
   $live = $debug;
-  $_SESSION['debug'] = 1;
-  $_POST['debug'] = 1;
-  $_GET['debug'] = 1;
+  $_SESSION['debug'] = (int) $_GET['debug'];
+  $_POST['debug']    = (int) $_GET['debug'];
   $email_booking_to = "marcus7777@gmail.com";
   $title = 'debug mode ::';
   $laterooms_booking_url = "https://xmlbookingwrapperuat.laterooms.com/XmlBooking.asmx";
