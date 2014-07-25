@@ -62,11 +62,11 @@ isset( $_GET['suitedisplay']  ) ? : $_GET['suitedisplay'] = "";
     </fieldset>
 
     <?php /* Single, Double, Deluxe, Family, Suite */ ?>
-    <input type="hidden" name="images[Single]" value="<?php print str_replace("http://$site/wp-content/uploads/", "", $_GET['singleroom']); ?>" />
-    <input type="hidden" name="images[Double]" value="<?php print str_replace("http://$site/wp-content/uploads/", "", $_GET['doubleroom']); ?>" />
-    <input type="hidden" name="images[Deluxe]" value="<?php print str_replace("http://$site/wp-content/uploads/", "", $_GET['deluxeroom']); ?>" />
-    <input type="hidden" name="images[Family]" value="<?php print str_replace("http://$site/wp-content/uploads/", "", $_GET['familyroom']); ?>" />
-    <input type="hidden" name="images[Suite]"  value="<?php print str_replace("http://$site/wp-content/uploads/", "", $_GET['suiteroom']); ?>" />
+    <input type="hidden" name="images[Single]" value="<?php print str_replace(array("http://$site/wp-content/uploads/","https://$site/wp-content/uploads/"), "", $_GET['singleroom']); ?>" />
+    <input type="hidden" name="images[Double]" value="<?php print str_replace(array("http://$site/wp-content/uploads/","https://$site/wp-content/uploads/"), "", $_GET['doubleroom']); ?>" />
+    <input type="hidden" name="images[Deluxe]" value="<?php print str_replace(array("http://$site/wp-content/uploads/","https://$site/wp-content/uploads/"), "", $_GET['deluxeroom']); ?>" />
+    <input type="hidden" name="images[Family]" value="<?php print str_replace(array("http://$site/wp-content/uploads/","https://$site/wp-content/uploads/"), "", $_GET['familyroom']); ?>" />
+    <input type="hidden" name="images[Suite]"  value="<?php print str_replace(array("http://$site/wp-content/uploads/","https://$site/wp-content/uploads/"), "", $_GET['suiteroom']); ?>" />
 
     <input type="hidden" name="display[Single]" value="<?php print $_GET['singledisplay']; ?>" />
     <input type="hidden" name="display[Double]" value="<?php print $_GET['doubledisplay']; ?>" />
