@@ -263,7 +263,7 @@ if ($ota == "1") { // verene
               }
 
               print '<form class="roomcards top" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
-          //    print '<div class="roomcards" id="roomcards">';
+              print '<div class="roomcards" id="roomcards">';
               print   '<span class="extra" style=" display: inline-block;" >';	
               print   '<h4>Includes</h4>';	
               print   str_ireplace(array("Included","Free"), "", $ValueAddDisplay);
@@ -275,7 +275,7 @@ if ($ota == "1") { // verene
               print   '</div>';			  
               print     '<button data-theme="f" title="'. $room['@attributes']['currencyCode'] . '" > £ '.number_format($room['@attributes']['totalPrice'], 2)  .' </button>';
               print   '</span>';	
-          //    print '</div>';
+              print '</div>';
               print '<input type="hidden" name="HotelID" value="'. $_GET['id'] .'" />';
               print '<input type="hidden" name="roomID" value="'.$room['AvailRooms']['AvailRoom']['@attributes']['roomID'].'" />';
               print '<input type="hidden" name="totalPrice" value="'.$room['@attributes']['totalPrice'].'" />';
