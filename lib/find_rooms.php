@@ -478,7 +478,7 @@ if ($_GET['debug'] == 2) {
     }
 
     if (isset($mapped[$Type])) {
-      $rooms_array[$Type][] = Array("Id" => $Id,'Price' => $Price, 'Formatted_cancellation_policy' => rtrim($room['formatted_cancellation_policy'], ">"), 'Cancellation_policy'=> $Cancellation_policy,'ValueAddDisplay'=> $ValueAddDisplay);
+      $rooms_array[$Type][] = Array("Id" => $Id,'Price' => $Price, 'Formatted_cancellation_policy' => rtrim($room['formatted_cancellation_policy'], ">"),'room_description' => trim($room['room_description']), 'Cancellation_policy'=> $Cancellation_policy,'ValueAddDisplay'=> $ValueAddDisplay);
     }
 
   }
