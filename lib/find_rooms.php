@@ -340,7 +340,7 @@ if ($ota == "1") { // verene
            */
 
               print '<form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
-              print '<div class="roomcards" id="roomcards">';
+           //   print '<div class="roomcards" id="roomcards">';
               if (trim(strip_tags($ValueAddDisplay))) {
                 print   '<span class="extra" style="display: inline-block;" >';	
                 print   '<h4>Includes</h4>';	
