@@ -291,7 +291,7 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRooms']['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
               @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
-              print '</form>';
+              print '</form><div style="clear:both"> </div>';
 
             } else {
 
