@@ -234,9 +234,15 @@ if ($ota == "1") { // verene
         if (is_array($rooms) && ( count($rooms, COUNT_RECURSIVE) > 1) ) { // is from venere?
           print "<div class='topbox'>";
           print " <img class='room online' src=" . $images[$type] . " />";
+          if ((int) $room['AvailRooms']['AvailRoom']['@attributes']['quantity'] > 1 ) {
+            $display_r = "<h3>" . $rooms[0]['AvailRooms']['AvailRoom']['@attributes']['quantity'] . ' x ' . $display_title[ $type ] . "</h3>";
+          } elseif ((int) $rooms[0]['AvailRoom']['@attributes']['quantity'] > 1 ) {
+            $display_r = "<h3>" . $rooms[0]['AvailRoom']['@attributes']['quantity'] . ' x ' . $display_title[ $type ] . "</h3>";
+          } else {
+            $display_r =  "<h3>" .$display_title[ $type ]. "</h3>";
+          }
+          print $display_r;
           foreach ($rooms as $room) {
-            $once = 0;
-
             // print "<!--debug room out ". print_r( $room, 1 )." -->";
             if ( isset ($room['AvailRooms'])) {
               $ValueAddDisplay = "";
@@ -250,14 +256,6 @@ if ($ota == "1") { // verene
                   if (isset($ValueAdd['@attributes']['label'])) $ValueAddDisplay .= "<div>" . $ValueAdd['@attributes']['label'] . "</div>"; 
                 }
               } 
-              if ($once++ == 0) {	
-                if ((int) $room['AvailRooms']['AvailRoom']['@attributes']['quantity'] > 1 ) {
-                  $display_r = "<h3>" . $room['AvailRooms']['AvailRoom']['@attributes']['quantity'] . ' x ' . $display_title[ $type ] . "</h3>";
-                } else {
-                  $display_r =  "<h3>" .$display_title[ $type ]. "</h3>";
-                }
-                print $display_r;
-              }
 
               if ($room['AvailRooms']['AvailRoom']['@attributes']['prepaid'] == "false") {
                 $pay_at = "<span class='pay_at'>Pay at hotel</span>";
@@ -322,13 +320,6 @@ if ($ota == "1") { // verene
               } elseif(isset($array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['AvailStays']['AvailStay']['GlobalCancellationPolicy'])){
                 $policy['Description'] =  $array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['AvailStays']['AvailStay']['GlobalCancellationPolicy']['@attributes']['policyDescription'];
                 $policy['Label'] =  $array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['AvailStays']['AvailStay']['GlobalCancellationPolicy']['@attributes']['policyLabel'];
-              }
-              if($once++ == 0) {	
-                if ((int) $room['AvailRoom']['@attributes']['quantity'] > 1 ) {
-                  print "<h3>" . $room['AvailRoom']['@attributes']['quantity'] . ' x ' . $display_title[ $type ] . "</h3>";
-                } else {
-                  print "<h3>" .$display_title[ $type ]. "</h3>";
-                }
               }
           /*Secound Pay Now Field
           if ($room['AvailRoom']['@attributes']['prepaid'] == "false") {
