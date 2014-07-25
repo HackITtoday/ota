@@ -228,7 +228,7 @@ if ($ota == "1") { // verene
     foreach ($display as $type => $rooms ) {
       //    ksort( $rooms );
       if (isset($map[$type]) && isset($images[$type]) && $images[$type] != "/wp-content/uploads" ) {
-        print "<!--debug rooms out ". print_r( $rooms, 1 )." -->";
+        print "<!-- debug rooms out ". print_r( $rooms, 1 )." -->";
 
         if (is_array($rooms) && ( count($rooms, COUNT_RECURSIVE) > 1) ) { // is from venere?
           print "<div class='topbox'>";
@@ -272,9 +272,9 @@ if ($ota == "1") { // verene
               print   '<a href="#!" class="cancelpolicy" class="tip" title="'. $room['GlobalCancellationPolicy']['@attributes']['policyDescription'] .'" >' . $room['GlobalCancellationPolicy']['@attributes']['policyLabel'] .' ' . $pay_at . '<img src="/ota/inc/images/information.gif" height="10" width="10"  /> </a>' ;
               print   '<div id="totprice">';
               print    '<div id="smalltot">Total</div>';
-              print   '</div>';			  
               print     '<button data-theme="f" title="'. $room['@attributes']['currencyCode'] . '" > £ '.number_format($room['@attributes']['totalPrice'], 2)  .' </button>';
-              print   '</span>';	
+              print   '</div>';			  
+              // print   '</span>';	
               print '</div>';
               print '<input type="hidden" name="HotelID" value="'. $_GET['id'] .'" />';
               print '<input type="hidden" name="roomID" value="'.$room['AvailRooms']['AvailRoom']['@attributes']['roomID'].'" />';
