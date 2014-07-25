@@ -77,7 +77,6 @@ foreach ($map as $type => $mapping) {
 }
 
 if (isset($_GET['ota'])) $ota = $_GET['ota'];
-if (isset($_GET['ota'])) $ota = $_GET['ota'];
 
 if ($ota == "1") { // verene
 
@@ -360,7 +359,7 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
               @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
-              print '</form>';
+              print '</form><div style="clear:both"> </div>';
 
             }       
           }
@@ -438,8 +437,8 @@ if (count($array['hotel']['lr_rates']['hotel_rooms']['room']) == 1){
   $array['hotel']['lr_rates']['hotel_rooms']['room'][] = $temp;
 }
 if ($_GET['debug'] == 2) {
-      print '<pre> $array[hotel][lr_rates][hotel_rooms] after :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
-      print '<pre> count($array[hotel][lr_rates][hotel_rooms]) after :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
+  print '<pre> $array[hotel][lr_rates][hotel_rooms] after :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
+  print '<pre> count($array[hotel][lr_rates][hotel_rooms]) after :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']),1) . '</pre>';
 }
 
 ?>
