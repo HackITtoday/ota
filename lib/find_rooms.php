@@ -546,13 +546,16 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     } else {
       print  'Cancellation policy';
     }
-    print '<span class="pay_at"></span>';
+    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
+
+    print '<a title="' . $room['room_description'] . '" class="cancelpolicy ui-link" href="#!">'; 
+    print  'Offers and Notes';
     print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
     print '<div id="totprice">';
-    print   '<div id="smalltot">Total</div>';
-    print   '<span>';			  
-    print     '<button data-theme="f" title="GBP" > '.$Price.' </button>';
-    print   '</span>';	
+    print  '<div id="smalltot">Total</div>';
+    print  '<span>';			  
+    print    '<button data-theme="f" title="GBP" > '.$Price.' </button>';
+    print  '</span>';	
     print '</div>';
     print '<input type="hidden" name="HotelID" value="'. $_GET['id'] .'" />'; 
     print '<input type="hidden" value="' . $Id . '" name="roomID">';
