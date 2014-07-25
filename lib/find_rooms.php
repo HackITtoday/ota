@@ -241,7 +241,7 @@ if ($ota == "1") { // verene
           } else {
             $display_r =  "<h3>" .$display_title[ $type ]. "</h3>";
           }
-          print $display_r;
+          print $display_r . " <div> ";
           foreach ($rooms as $room) {
             // print "<!--debug room out ". print_r( $room, 1 )." -->";
             if ( isset ($room['AvailRooms'])) {
@@ -364,7 +364,7 @@ if ($ota == "1") { // verene
 
             }       
           }
-          print "</div>"; // topbox
+          print "</div></div>"; // topbox
         } else {
           print "<div class='topbox'>";
           print " <img class='room phone-only' src=" . $images[$type] . " />";
