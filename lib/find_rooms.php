@@ -329,7 +329,7 @@ if ($ota == "1") { // verene
           }
            */
 
-              print '<form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
+              print '<div><form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
               print '<div class="roomcards" id="roomcards">';
               if (trim(strip_tags($ValueAddDisplay))) {
                 print   '<span class="extra" style="display: inline-block;" >';	
@@ -360,7 +360,7 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
               @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
-              print '</form>';
+              print '</form></div>';
 
             }       
           }
