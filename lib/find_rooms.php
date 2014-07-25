@@ -329,8 +329,8 @@ if ($ota == "1") { // verene
           }
            */
 
-              print '<div><form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
-              print '<div class="roomcards" id="roomcards">';
+              print '<form class="roomcards" action="/ota/lib/booking.php" method="post" data-ajax="false">';	
+              // print '<div class="roomcards" id="roomcards">';
               if (trim(strip_tags($ValueAddDisplay))) {
                 print   '<span class="extra" style="display: inline-block;" >';	
                 print   '<h4>Includes</h4>';	
@@ -344,7 +344,7 @@ if ($ota == "1") { // verene
               print   '<span style="text-align: right; display: inline-block;" >';			  
               print     '<button style="text-align: right;" data-theme="f" title="'. $room['AvailRoom']['@attributes']['currencyCode'] . '" > £ '.number_format($room['AvailRoom']['@attributes']['totalPrice'], 2)  .' </button>';
               print   '</span>';	
-              print '</div>';
+              // print '</div>';
               print '<input type="hidden" name="HotelID" value="'. $_GET['id'] .'" />';
               print '<input type="hidden" name="roomID" value="'.$room['AvailRoom']['@attributes']['roomID'].'" />';
               print '<input type="hidden" name="totalPrice" value="'.$room['AvailRoom']['@attributes']['totalPrice'].'" />';
@@ -360,11 +360,11 @@ if ($ota == "1") { // verene
               print '<input type="hidden" name="prepaid" value="'.$room['AvailRoom']['@attributes']['prepaid'].'" />';
               print '<input type="hidden" name="hotel" value="'.$array['XHI_HotelAvailRS']['AvailResults']['AvailResult']['PropertyDetails']['@attributes']['name'].'" />';
               @print '<input type="hidden" name="ota" value="'. $_GET['ota'] .'" />';
-              print '</form></div>';
+              print '</form>';
 
             }       
           }
-          print "</div></div>"; // topbox
+          print "</div>"; // topbox
         } else {
           print "<div class='topbox'>";
           print " <img class='room phone-only' src=" . $images[$type] . " />";
