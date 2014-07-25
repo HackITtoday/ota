@@ -253,11 +253,10 @@ if ($ota == "1") { // verene
               if ($once++ == 0) {	
                 if ((int) $room['AvailRooms']['AvailRoom']['@attributes']['quantity'] > 1 ) {
                   $display_r = "<h3>" . $room['AvailRooms']['AvailRoom']['@attributes']['quantity'] . ' x ' . $display_title[ $type ] . "</h3>";
-                  print $display_r;
                 } else {
                   $display_r =  "<h3>" .$display_title[ $type ]. "</h3>";
-                  print $display_r;
                 }
+                print $display_r;
               }
 
               if ($room['AvailRooms']['AvailRoom']['@attributes']['prepaid'] == "false") {
