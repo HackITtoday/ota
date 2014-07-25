@@ -354,7 +354,7 @@ if ($ota == "1") { // verene
               print   '<span style="text-align: right; display: inline-block;" >';			  
               print     '<button style="text-align: right;" data-theme="f" title="'. $room['AvailRoom']['@attributes']['currencyCode'] . '" > £ '.number_format($room['AvailRoom']['@attributes']['totalPrice'], 2)  .' </button>';
               print   '</span>';	
-              print '</div>';
+           //   print '</div>';
               print '<input type="hidden" name="HotelID" value="'. $_GET['id'] .'" />';
               print '<input type="hidden" name="roomID" value="'.$room['AvailRoom']['@attributes']['roomID'].'" />';
               print '<input type="hidden" name="totalPrice" value="'.$room['AvailRoom']['@attributes']['totalPrice'].'" />';
@@ -374,7 +374,7 @@ if ($ota == "1") { // verene
 
             }       
           }
-          print "</div></div>"; // topbox
+          print "</div>"; // topbox
         } else {
           print "<div class='topbox'>";
           print " <img class='room phone-only' src=" . $images[$type] . " />";
