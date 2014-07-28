@@ -41,11 +41,11 @@ $rooms = ((int) $_GET['hdurr']);
 include './template.php';
 
 $images = Array();
-$images['Single'] = "/wp-content/uploads" . $_GET['images']['Single'] ;
-$images['Double'] = "/wp-content/uploads" . $_GET['images']['Double'] ;
-$images['Deluxe'] = "/wp-content/uploads" . $_GET['images']['Deluxe'] ;
-$images['Family'] = "/wp-content/uploads" . $_GET['images']['Family'] ;
-$images['Suite']  = "/wp-content/uploads" . $_GET['images']['Suite']  ;
+$images['Single'] = "/wp-content/uploads/" . $_GET['images']['Single'] ;
+$images['Double'] = "/wp-content/uploads/" . $_GET['images']['Double'] ;
+$images['Deluxe'] = "/wp-content/uploads/" . $_GET['images']['Deluxe'] ;
+$images['Family'] = "/wp-content/uploads/" . $_GET['images']['Family'] ;
+$images['Suite']  = "/wp-content/uploads/" . $_GET['images']['Suite']  ;
 
 $map = Array();
 $map['Single'] = strtolower($_GET['map']['Single']) ;
@@ -504,7 +504,7 @@ if ($_GET['debug'] == 2) {
   // print_r($array['hotel']);
 }
 
-function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
+function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people, $hotel_name) {
   if ($Type) {
     foreach ($rooms_array as $room) {
       print "<div class='topbox'>";
@@ -522,7 +522,7 @@ function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_
     }
   }
 }
-function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
+function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people, $hotel_name) {
   $Price = $room['Price'];
   $Cancellation_policy = $room['Cancellation_policy'] ;
   $ValueAddDisplay = $room['ValueAddDisplay'];
