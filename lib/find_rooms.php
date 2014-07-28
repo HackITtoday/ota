@@ -551,7 +551,8 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
     print '<a title="' . $room['room_description'] . '" class="offersandnotes ui-link" href="#!">'; 
     print  'Offers and Notes';
     print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
-    print '<span title="' . $room['room_description'] . '" > ' .substr($room['room_description'], 0, 100). ' ... </span>';
+    if (strlen ($room['room_description']) > 100 ) $dots = ' ...';
+    print '<span title="' . $room['room_description'] . '" > ' .substr($room['room_description'], 0, 100). $dots .' </span>';
     print '<div id="totprice">';
     print  '<div id="smalltot">Total</div>';
     print  '<span>';			  
