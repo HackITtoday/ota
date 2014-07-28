@@ -227,7 +227,7 @@ if ($ota == "1") { // verene
     print "<!-- images ". print_r($images ,1 ) ." -->";
     foreach ($display as $type => $rooms ) {
       //    ksort( $rooms );
-      if (isset($map[$type]) && isset($images[$type]) && $images[$type] != "/wp-content/uploads" ) {
+      if (isset($map[$type]) && isset($images[$type]) && ($images[$type] != "/wp-content/uploads" || $images[$type] != "/wp-content/uploads/") ) {
         print "<!-- debug rooms out ". print_r( $rooms, 1 )." -->";
 
         if (is_array($rooms) && ( count($rooms, COUNT_RECURSIVE) > 1) ) { // is from venere?
