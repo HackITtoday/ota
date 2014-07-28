@@ -478,7 +478,7 @@ if ($_GET['debug'] == 2) {
     }
 
     if (isset($mapped[$Type])) {
-      $rooms_array[$Type][] = Array("Id" => $Id,'Price' => $Price, 'Formatted_cancellation_policy' => rtrim($room['formatted_cancellation_policy'], ">"),'room_description' => $room['room_description'], 'Cancellation_policy'=> $Cancellation_policy,'ValueAddDisplay'=> $ValueAddDisplay);
+      $rooms_array[$Type][] = Array("Id" => $Id,'Price' => $Price, 'Formatted_cancellation_policy' => rtrim($room['formatted_cancellation_policy'], ">"),'room_description' => trim($room['room_description'] , " \t\n\r."), 'Cancellation_policy'=> $Cancellation_policy,'ValueAddDisplay'=> $ValueAddDisplay);
     }
 
   }
@@ -550,7 +550,7 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
 
     print '<a title="' . $room['room_description'] . '" class="offersandnotes ui-link" href="#!">'; 
     print  'Offers and Notes';
-    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
+    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a> <span title="' . $room['room_description'] . '> ' .substr($room['room_description'], 0, 100) ' ...</span>';
     print '<div id="totprice">';
     print  '<div id="smalltot">Total</div>';
     print  '<span>';			  
