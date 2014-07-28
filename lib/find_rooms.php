@@ -428,8 +428,8 @@ if ($ota == "1") { // verene
 </div>
 
 <?php  if ($_GET['debug'] == 2) {
-      print '<pre> $array[hotel][lr_rates][hotel_rooms][room] :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
-      print '<pre> count($array[hotel][lr_rates][hotel_rooms][room]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']['room']),1) . '</pre>';
+  print '<pre> $array[hotel][lr_rates][hotel_rooms][room] :' . print_r ($array['hotel']['lr_rates']['hotel_rooms']['room'],1) . '</pre>';
+  print '<pre> count($array[hotel][lr_rates][hotel_rooms][room]) :' . print_r (count($array['hotel']['lr_rates']['hotel_rooms']['room']),1) . '</pre>';
 }
 if (count($array['hotel']['lr_rates']['hotel_rooms']['room']) == 1){
   $temp = $array['hotel']['lr_rates']['hotel_rooms'];
@@ -506,20 +506,20 @@ if ($_GET['debug'] == 2) {
 
 function print_room_type($map, $Type, $num_rooms, $rooms_array, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
   if ($Type) {
-    print "<div class='topbox'>";
-    print   "<img class='room phone-only' src=" . $map['images'] . " />";
-    if ((int) $rooms > 1 ) {
-      print   "<h3>" . $num_rooms . ' x ' . $map['display_title'] . "</h3>";
-    } else {
-      print   "<h3>" . $map['display_title'] . "</h3>";
-    }
     foreach ($rooms_array as $room) {
+      print "<div class='topbox'>";
+      print   "<img class='room phone-only' src=" . $map['images'] . " />";
+      if ((int) $rooms > 1 ) {
+        print   "<h3>" . $num_rooms . ' x ' . $map['display_title'] . "</h3>";
+      } else {
+        print   "<h3>" . $map['display_title'] . "</h3>";
+      }
       print_room($mapped, $room['Id'], $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people,$hotel_name ); 
+      if ( count($rooms_array) == 0 ) {
+        print '<div id="norooms" style="font-family:Roboto, sans-serif; font-size:20px; color:#ff3300; font-weight:300;"> This room have not been advertised on-line you will need to phone us: <a href="tel:01189714700" >0118 971 4700</a></div>';
+      }
+      print "</div><div style='clear:both' ></div>"; 
     }
-    if ( count($rooms_array) == 0 ) {
-      print '<div id="norooms" style="font-family:Roboto, sans-serif; font-size:20px; color:#ff3300; font-weight:300;"> This room have not been advertised on-line you will need to phone us: <a href="tel:01189714700" >0118 971 4700</a></div>';
-    }
-    print "</div><div style='clear:both' ></div>"; 
   }
 }
 function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_display, $dateFrom, $nights, $people,$hotel_name) {
