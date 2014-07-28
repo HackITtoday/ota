@@ -540,19 +540,22 @@ function print_room($mapped, $Id, $Type, $num_rooms, $room, $title, $people_disp
         } 
       print '</span>';
     } 
+    print "<div class='info' >";
     print '<a title="' . $room['Formatted_cancellation_policy'] . '" class="cancelpolicy ui-link" href="#!">'; 
     if (strpos($room['Formatted_cancellation_policy'] , 'advance purchase rate')) {
-      print  'Advanced Purchase-Non Cancellable';
+      print 'Advanced Purchase-Non Cancellable';
     } else {
-      print  'Cancellation policy';
+      print 'Cancellation policy';
     }
-    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
+    print   '<img width="10" height="10" src="/ota/inc/images/information.gif"></a>';
 
-    print '<a title="' . $room['room_description'] . '" class="offersandnotes ui-link" href="#!">'; 
-    print  'Offers and Notes';
-    print '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
+    print   '<a title="' . $room['room_description'] . '" class="offersandnotes ui-link" href="#!">'; 
+    print     'Offers and Notes';
+    print   '<img width="10" height="10" src="/ota/inc/images/information.gif"> </a>';
     if (strlen ($room['room_description']) > 100 ) $dots = ' ...';
-    print '<span title="' . $room['room_description'] . '" > ' .substr($room['room_description'], 0, 100). $dots .' </span>';
+    print   '<span title="' . $room['room_description'] . '" > ' .substr($room['room_description'], 0, 100). $dots .' </span>';
+    print '</div>'; // info 
+
     print '<div id="totprice">';
     print  '<div id="smalltot">Total</div>';
     print  '<span>';			  
